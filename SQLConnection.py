@@ -7,7 +7,7 @@ connection = mysql.connector.connect(
         user = "root", # Subject to change
         password = "334Mommy!!", # Put your root password here
         database = "RestaurantMangement") # Put your database name here
-    
+
 mycursor = connection.cursor()
 
 mycursor.execute("SELECT * FROM employee")
