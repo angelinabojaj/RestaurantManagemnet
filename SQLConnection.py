@@ -6,7 +6,7 @@ connection = mysql.connector.connect(
         host="127.0.0.1", # Subject to change
         user = "root", # Subject to change
         password = "334Mommy!!", # Put your root password here
-        database = "RestaurantMangement") # Put your database name here
+        database = "rma") # Put your database name here
 
 mycursor = connection.cursor()
 
