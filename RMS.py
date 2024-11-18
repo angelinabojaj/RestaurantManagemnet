@@ -1,9 +1,14 @@
 from tkinter import *
 import customtkinter
+from PIL import Image
 
 #Interface for Manager
 customtkinter.set_appearance_mode("Light")
 customtkinter.set_default_color_theme("CustomColor.json")
+
+RMS_Logo_image= Image.open('RMS_logo_no_background.png')
+RMS_Logo_image = customtkinter.CTkImage(light_image=RMS_Logo_image, size=(300,110))
+burgerPic = customtkinter.CTkImage(light_image=Image.open('RMS_Database_Pictures\All American Burger.jpg'), size=(50, 50)) # Example for burgerPic
 
 managementUI = customtkinter.CTk()
 
@@ -12,6 +17,9 @@ screen_height = managementUI.winfo_screenheight()
 
 managementUI.title("Restaurant Management Solutions")
 managementUI.geometry(f"{screen_width}x{screen_height - 100}+0+0")
+
+# background_frame = customtkinter.CTkFrame(managementUI, width=screen_width, height=screen_height, fg_color="black") 
+# background_frame.grid(row=0,column=0, rowspan=9, columnspan=2, sticky='nswe')
 
 # Set dimensions for the "rectangle"
 rect_width = 225
@@ -47,6 +55,9 @@ def homeButton_click(): # this button will switch from manager to employee view 
 #Start 
     customtkinter.set_appearance_mode("Light")
     customtkinter.set_default_color_theme("CustomColor.json")
+
+    RMS_Logo_image= Image.open('RMS_logo_no_background.png')
+    RMS_Logo_image = customtkinter.CTkImage(light_image=RMS_Logo_image, size=(300,110))
 
     customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
     Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
@@ -88,7 +99,9 @@ def homeButton_click(): # this button will switch from manager to employee view 
     content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="green") 
     content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-    def specialsButton_clicked():
+    # Button definitions 
+
+    def specialsButton_clicked(): #Specials interface
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
@@ -101,28 +114,45 @@ def homeButton_click(): # this button will switch from manager to employee view 
         # Ensure the row and column in content_frame can expand to fill the space
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
+    
+    def startOrder_clicked():
+        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-    logo = customtkinter.CTkButton(left_frame, text="RMS LOGO INSERT HERE", width=100, height=100)
-    spacer = customtkinter.CTkLabel(left_frame, text="", width=rect_width, height= 100, fg_color="#525fc7")
+        burgerPic = customtkinter.CTkImage(light_image=Image.open('RMS_Database_Pictures\All American Burger.jpg'), size=(100, 80)) # Example for burgerPic
+
+        specialsTitle_label = customtkinter.CTkLabel(content_frame, text="Place Order", font=(Hanuman, 80), text_color="black")
+        specialsTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+
+        burgerPic_button = customtkinter.CTkButton(content_frame, image=burgerPic, text="", width=100, height=80) 
+        burgerPic_button.grid(row=1, column=0)
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_rowconfigure(1, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+    
+
+
+    logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100)
     homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100,command= homeButton_click)
     lookUpButton = customtkinter.CTkButton(left_frame, text="Look Up (Allergies)", width=200, height=100)
-    startOrderButton = customtkinter.CTkButton(left_frame, text="Start Order", width=200, height=100)
+    startOrderButton = customtkinter.CTkButton(left_frame, text="Start Order", width=200, height=100,command=startOrder_clicked)
     viewOrdersButton = customtkinter.CTkButton(left_frame, text="View Active Orders", width=200, height=100)
     tableManagementButton = customtkinter.CTkButton(left_frame, text="Table Management", width=200, height=100)
-    DeliveriesButton = customtkinter.CTkButton(left_frame, text="Deliveries", width=200, height=100,command=specialsButton_clicked)
+    specialsButton = customtkinter.CTkButton(left_frame, text="Specials", width=200, height=100,command=specialsButton_clicked)
 
     for i in range(8): 
         left_frame.grid_rowconfigure(i, weight=1) 
     left_frame.grid_columnconfigure(0, weight=1)
 
-    logo.grid(row=0, column=0, pady=10, padx=10)
-    spacer.grid(row=1, column=0)
+    logo.grid(row=0, column=0, pady=30, padx=10)
     homeButton.grid(row=2, column=0, pady=10, padx=10)
     lookUpButton.grid(row=3, column=0, pady=10, padx=10)
     startOrderButton.grid(row=4, column=0, pady=10, padx=10)
     viewOrdersButton.grid(row=5, column=0, pady=10, padx=10)
     tableManagementButton.grid(row=6, column=0, pady=10, padx=10)
-    DeliveriesButton.grid(row=7, column=0, pady=10, padx=10,)
+    specialsButton.grid(row=7, column=0, pady=10, padx=10,)
 
     employeeUI.mainloop()
 
@@ -130,8 +160,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
 
 
 #Stop
-logo = customtkinter.CTkButton(left_frame, text="RMS LOGO INSERT HERE", width=100, height=100)
-spacer = customtkinter.CTkLabel(left_frame, text="", width=rect_width, height= 100, fg_color="#525fc7")
+logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100)
 homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100,command= homeButton_click)
 scheduleButton = customtkinter.CTkButton(left_frame, text="Schedule", width=200, height=100)
 earningsButton = customtkinter.CTkButton(left_frame, text="Earnings", width=200, height=100)
@@ -143,8 +172,7 @@ for i in range(8):
     left_frame.grid_rowconfigure(i, weight=1) 
 left_frame.grid_columnconfigure(0, weight=1)
 
-logo.grid(row=0, column=0, pady=10, padx=10)
-spacer.grid(row=1, column=0)
+logo.grid(row=0, column=0, pady=30, padx=10)
 homeButton.grid(row=2, column=0, pady=10, padx=10)
 scheduleButton.grid(row=3, column=0, pady=10, padx=10)
 earningsButton.grid(row=4, column=0, pady=10, padx=10)
