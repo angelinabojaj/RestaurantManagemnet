@@ -1,0 +1,25 @@
+from tkinter import Tk, Button
+from PIL import Image, ImageTk # pip install pillow
+
+# Create the Tkinter window
+root = Tk()
+root.title("Image Button")
+
+# Open and resize the image
+image_path = "C:/Users/angel/OneDrive/Desktop/RMS_Database_MENU_PICTURES/Water.jpg" # Download the file to your desktop and change the paths to yours.
+img = Image.open(image_path)
+new_size = (100, 100)  # Resize to 100x100
+resized_img = img.resize(new_size)
+
+# Convert the resized image to a PhotoImage object
+photo = ImageTk.PhotoImage(resized_img)
+
+# Create a button with the resized image
+button = Button(root, image=photo, text="Water", compound="top")
+button.pack(pady=20)
+
+# Keep the image reference alive (prevents garbage collection)
+button.image = photo
+
+# Run the application
+root.mainloop()
