@@ -177,37 +177,6 @@ def homeButton_click(): # this button will switch from manager to employee view 
     
     # Look Up Button
     def lookUpButton_clicked():
-    
-    # Employee Button Definitions
-    
-    # Look Up Button
-    def lookUpButton_clicked():
-        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
-        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
-
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Look Up", font=(Hanuman, 80), text_color="black",underline= False)
-        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
-    
-        # Ensure the row and column in content_frame can expand to fill the space
-        content_frame.grid_rowconfigure(0, weight=1)
-        content_frame.grid_columnconfigure(0, weight=1)
-    
-    # Buttons (In Order They Appear)
-    def lookUpButton_clicked():
-        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
-        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
-
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Look Up", font=(Hanuman, 80), text_color="black",underline= True)
-        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Look Up", font=(Hanuman, 80), text_color="black",underline= False)
-        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
-    
-        # Ensure the row and column in content_frame can expand to fill the space
-        content_frame.grid_rowconfigure(0, weight=1)
-        content_frame.grid_columnconfigure(0, weight=1)
-    
-    # Buttons (In Order They Appear)
-    def lookUpButton_clicked():
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
@@ -218,8 +187,8 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
     
-        # Start Order Button
-        # Start Order Button
+    
+    # Start Order Button
     def startOrder_clicked():
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
@@ -255,6 +224,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame.grid_rowconfigure(1, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
     
+    # Table Mangement Button
     def tableManagement_clicked():
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
