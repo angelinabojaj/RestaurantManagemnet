@@ -50,6 +50,9 @@ content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="red")
 content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
 # Manager Button Definitions
+# Button For Manager Switch -> Employee
+switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="DOESNT WORK: Employee View", width=100, height= 60)
+switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
 
 # Schedule Button
 def scheduleButton_clicked():
@@ -121,7 +124,9 @@ def timeClockButton_clciked():
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
 
-
+# Button For Manager Switch -> Employee
+switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="NO WORK: Employ View", width=100, height= 60)
+switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
 
 #Commands for Buttons clicks
 def homeButton_click(): # this button will switch from manager to employee view for now
@@ -169,7 +174,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
     left_frame.grid(row=0, column=0, rowspan=8, sticky="nsw")
 
     # Create a main content frame for dynamic content 
-    content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="green") 
+    content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="white") 
     content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
     
@@ -251,6 +256,8 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
 
+    switchToManager_Button = customtkinter.CTkButton(top_frame, text="NO WORK: MAN View", width=100, height= 60)
+    switchToManager_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
 
 # Employee Buttons Defined
     # Command Already Added
