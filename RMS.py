@@ -50,6 +50,8 @@ content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="red")
 content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
 # Manager Button Definitions
+
+# Schedule Button
 def scheduleButton_clicked():
         customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
@@ -62,7 +64,8 @@ def scheduleButton_clicked():
         # Ensure the row and column in content_frame can expand to fill the space
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
-    
+
+# Earnings Button
 def earningsButton_clicked():
         customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
@@ -75,6 +78,50 @@ def earningsButton_clicked():
         # Ensure the row and column in content_frame can expand to fill the space
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
+
+# Transaction Button
+def transactionsButton_clicked():
+        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Transaction", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+# Utilities
+def utilitiesButton_clicked():
+        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Utilities", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+# Time Clock
+def timeClockButton_clciked():
+        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Time Clock", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+
 
 #Commands for Buttons clicks
 def homeButton_click(): # this button will switch from manager to employee view for now
@@ -244,10 +291,10 @@ def homeButton_click(): # this button will switch from manager to employee view 
 logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100)
 homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100,command= homeButton_click)
 scheduleButton = customtkinter.CTkButton(left_frame, text="Schedule", width=200, height=100, command = scheduleButton_clicked)
-earningsButton = customtkinter.CTkButton(left_frame, text="Earnings", width=200, height=100)
-transactionButton = customtkinter.CTkButton(left_frame, text="Transaction", width=200, height=100)
-utilitiesButton = customtkinter.CTkButton(left_frame, text="Utilities", width=200, height=100)
-TimeClockButton = customtkinter.CTkButton(left_frame, text="TimeClock", width=200, height=100)
+earningsButton = customtkinter.CTkButton(left_frame, text="Earnings", width=200, height=100, command = earningsButton_clicked)
+transactionButton = customtkinter.CTkButton(left_frame, text="Transaction", width=200, height=100, command = transactionsButton_clicked)
+utilitiesButton = customtkinter.CTkButton(left_frame, text="Utilities", width=200, height=100, command = utilitiesButton_clicked)
+TimeClockButton = customtkinter.CTkButton(left_frame, text="TimeClock", width=200, height=100, command = timeClockButton_clciked)
 
 for i in range(8): 
     left_frame.grid_rowconfigure(i, weight=1) 
