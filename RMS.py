@@ -63,6 +63,84 @@ left_frame.grid(row=0, column=0, rowspan=8, sticky="nsw")
 content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="red") 
 content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
+# Manager Button Definitions
+# Button For Manager Switch -> Employee
+switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="DOESNT WORK: Employee View", width=100, height= 60)
+switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
+
+# Schedule Button
+def scheduleButton_clicked():
+        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Scheduele", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+# Earnings Button
+def earningsButton_clicked():
+        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Earnings", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+# Transaction Button
+def transactionsButton_clicked():
+        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Transaction", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+# Utilities
+def utilitiesButton_clicked():
+        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Utilities", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+# Time Clock
+def timeClockButton_clciked():
+        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Time Clock", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+# Button For Manager Switch -> Employee
+switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="NO WORK: Employ View", width=100, height= 60)
+switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
 
 #Commands for Buttons clicks
 def homeButton_click(): # this button will switch from manager to employee view for now
@@ -110,7 +188,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
     left_frame.grid(row=0, column=0, rowspan=8, sticky="nsw")
 
     # Create a main content frame for dynamic content 
-    content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="green") 
+    content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="white") 
     content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
     #Food items class
@@ -140,19 +218,24 @@ def homeButton_click(): # this button will switch from manager to employee view 
     # Button definitions 
 
     def specialsButton_clicked(): #Specials interface
+    
+    # Employee Button Definitions
+    
+    # Look Up Button
+    def lookUpButton_clicked():
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        specialsTitle_label = customtkinter.CTkLabel(content_frame, text="Specials", font=(Hanuman, 80), text_color="black",underline= True)
-        specialsTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
-
-        specials_label = customtkinter.CTkLabel(content_frame, text="Monday:\n $1 Koney Dogs\n Tuesday\n$1 Chicken Lemon Rice Soup\nWednesday\n Free Side of chili cheese fries with every meal\nThursday\n Free desert of your choice after spending $40\nFriday\n $3 Gyros(chicken or Lamb)", font=(customFont), text_color="black")
-        specials_label.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Look Up", font=(Hanuman, 80), text_color="black",underline= True)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
     
         # Ensure the row and column in content_frame can expand to fill the space
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
+        
     
+    
+    # Start Order Button
     def startOrder_clicked():
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
@@ -305,14 +388,66 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame.grid_columnconfigure(7, weight=1)
         content_frame.grid_columnconfigure(8, weight=1)
     
+    # View Order Button
+    def viewOrder_clicked():
+        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
+        burgerPic = customtkinter.CTkImage(light_image=Image.open('RMS_Database_Pictures\All American Burger.jpg'), size=(100, 80)) # Example for burgerPic
 
-    logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100)
+        specialsTitle_label = customtkinter.CTkLabel(content_frame, text="View Order", font=(Hanuman, 80), text_color="black")
+        specialsTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+
+        burgerPic_button = customtkinter.CTkButton(content_frame, image=burgerPic, text="", width=100, height=80) 
+        burgerPic_button.grid(row=1, column=0)
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_rowconfigure(1, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+    
+    # Table Mangement Button
+    def tableManagement_clicked():
+        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Table Management", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+    
+    # Specials Button
+    def specialsButton_clicked(): #Specials interface
+        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        specialsTitle_label = customtkinter.CTkLabel(content_frame, text="Specials", font=(Hanuman, 80), text_color="black",underline= True)
+        specialsTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+
+        specials_label = customtkinter.CTkLabel(content_frame, text="Monday:\n $1 Koney Dogs\n Tuesday\n$1 Chicken Lemon Rice Soup\nWednesday\n Free Side of chili cheese fries with every meal\nThursday\n Free desert of your choice after spending $40\nFriday\n $3 Gyros(chicken or Lamb)", font=(customFont), text_color="black")
+        specials_label.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+
+    switchToManager_Button = customtkinter.CTkButton(top_frame, text="NO WORK: MAN View", width=100, height= 60)
+    switchToManager_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
+
+# Employee Buttons Defined
+    # Command Already Added
+    logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100) # Just Logo No Command
     homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100,command= homeButton_click)
     MenuButton = customtkinter.CTkButton(left_frame, text="Menu", width=200, height=100,command=menuButton_clicked)
+    lookUpButton = customtkinter.CTkButton(left_frame, text="Look Up (Allergies)", width=200, height=100, command = lookUpButton_clicked)
+    lookUpButton = customtkinter.CTkButton(left_frame, text="Look Up (Allergies)", width=200, height=100, command = lookUpButton_clicked)
     startOrderButton = customtkinter.CTkButton(left_frame, text="Start Order", width=200, height=100,command=startOrder_clicked)
-    viewOrdersButton = customtkinter.CTkButton(left_frame, text="View Active Orders", width=200, height=100)
-    tableManagementButton = customtkinter.CTkButton(left_frame, text="Table Management", width=200, height=100)
+    viewOrdersButton = customtkinter.CTkButton(left_frame, text="View Active Orders", width=200, height=100, command = viewOrder_clicked)
+    tableManagementButton = customtkinter.CTkButton(left_frame, text="Table Management", width=200, height=100, command = tableManagement_clicked)
+    viewOrdersButton = customtkinter.CTkButton(left_frame, text="View Active Orders", width=200, height=100, command = viewOrder_clicked)
+    tableManagementButton = customtkinter.CTkButton(left_frame, text="Table Management", width=200, height=100, command = tableManagement_clicked)
     specialsButton = customtkinter.CTkButton(left_frame, text="Specials", width=200, height=100,command=specialsButton_clicked)
 
     for i in range(8): 
@@ -329,17 +464,17 @@ def homeButton_click(): # this button will switch from manager to employee view 
 
     employeeUI.mainloop()
 
-
-
-
-#Stop
+# Manager Buttons
+    # Command Already Added
+# Manager Buttons
+    # Command Already Added
 logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100)
 homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100,command= homeButton_click)
-scheduleButton = customtkinter.CTkButton(left_frame, text="Schedule", width=200, height=100)
-earningsButton = customtkinter.CTkButton(left_frame, text="Earnings", width=200, height=100)
-transactionButton = customtkinter.CTkButton(left_frame, text="Transaction", width=200, height=100)
-utilitiesButton = customtkinter.CTkButton(left_frame, text="Utilities", width=200, height=100)
-TimeClockButton = customtkinter.CTkButton(left_frame, text="TimeClock", width=200, height=100)
+scheduleButton = customtkinter.CTkButton(left_frame, text="Schedule", width=200, height=100, command = scheduleButton_clicked)
+earningsButton = customtkinter.CTkButton(left_frame, text="Earnings", width=200, height=100, command = earningsButton_clicked)
+transactionButton = customtkinter.CTkButton(left_frame, text="Transaction", width=200, height=100, command = transactionsButton_clicked)
+utilitiesButton = customtkinter.CTkButton(left_frame, text="Utilities", width=200, height=100, command = utilitiesButton_clicked)
+TimeClockButton = customtkinter.CTkButton(left_frame, text="TimeClock", width=200, height=100, command = timeClockButton_clciked)
 
 for i in range(8): 
     left_frame.grid_rowconfigure(i, weight=1) 
@@ -352,7 +487,5 @@ earningsButton.grid(row=4, column=0, pady=10, padx=10)
 transactionButton.grid(row=5, column=0, pady=10, padx=10)
 utilitiesButton.grid(row=6, column=0, pady=10, padx=10)
 TimeClockButton.grid(row=7, column=0, pady=10, padx=10)
-
-
 
 managementUI.mainloop()
