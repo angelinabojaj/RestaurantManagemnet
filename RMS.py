@@ -61,8 +61,11 @@ def scheduleButton_clicked():
         content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Scheduele", font=(Hanuman, 80), text_color="black",underline= False)
-        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+        schedueleTitle_label = customtkinter.CTkLabel(content_frame, text="Scheduele", font=(Hanuman, 40), text_color="black",underline= False)
+        schedueleTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+        
+        schedueleTitle_description = customtkinter.CTkLabel(content_frame, text="Shifts are created on a separate system (Google Calendars) and imported into the system via a table. Time off requests are made to be sent to the manager via email.", font=(Hanuman, 18), text_color="black")
+        schedueleTitle_description.grid(row=0, column=0, padx=40, pady=40, sticky="nsew")
     
         # Ensure the row and column in content_frame can expand to fill the space
         content_frame.grid_rowconfigure(0, weight=1)
