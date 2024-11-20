@@ -77,11 +77,11 @@ def scheduleButton_clicked():
         content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, rowspan = 3, columnspan=8, sticky="nswe")
 
-        schedueleTitle_label = customtkinter.CTkLabel(content_frame, text="Scheduele", font=(Hanuman, 40), text_color="black",underline= False)
+        schedueleTitle_label = customtkinter.CTkLabel(content_frame, text="Scheduele", font=(Hanuman, 40), text_color="black")
         schedueleTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nw")
         
-        schedueleTitle_description = customtkinter.CTkLabel(content_frame, text="Shifts are created on a separate system (Google Calendars) and imported into the system via a table. Time off requests are made to be sent to the manager via email.", font=(Hanuman, 18), text_color="black")
-        schedueleTitle_description.grid(row=1, column=0, padx=20, pady=20, sticky="w")
+        schedueleTitle_description = customtkinter.CTkLabel(content_frame, text="Shifts are created on Google Calendars and imported into the table. Time off requests are made to be sent to the manager via email.", width = 150, font=(Hanuman, 18), text_color="black", anchor = "w", justify = "left")
+        schedueleTitle_description.grid(row=1, column=0, padx=20, pady=20, sticky="nw")
     
         scheduele = SQLConnection.fetch_all("SELECT * FROM scheduele")
         print(scheduele)
@@ -105,7 +105,7 @@ def scheduleButton_clicked():
         schedueleTable.configure(yscroll = scrollbar.set)
         scrollbar.pack(side="right", fill="y")
         
-        schedueleTable.grid(row = 2, column = 0, padx = 20, pady = 20, sticky = "nsew")
+        schedueleTable.grid(row = 2, column = 0, padx = 3, pady = 3, sticky = "nsew")
         scrollbar.grid(row = 2, column = 1, sticky = "ns")
         
         inventoryButtons_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
@@ -119,9 +119,13 @@ def scheduleButton_clicked():
         shiftDuties_button.grid(row = 0, column = 1, padx = 15, pady = 15)
         viewEmployeePerformance_button.grid(row = 0, column = 2, padx = 15, pady = 15)
         
+        content_frame.grid_rowconfigure(0, weight = 0)
         content_frame.grid_rowconfigure(1, weight=1)
-        content_frame.grid_rowconfigure(2, weight=0)
+        content_frame.grid_rowconfigure(2, weight=3)
+        content_frame.grid_rowconfigure(3, weight=0)
+        
         content_frame.grid_columnconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(1, weight=0)
 
 # Make Scheduele Changes Button
 def makeScheduele_clicked():
