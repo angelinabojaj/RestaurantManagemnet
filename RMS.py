@@ -134,6 +134,18 @@ def makeScheduele_clicked():
 # Shift Duties Button
 def shiftDuties_clicked():
     print("Clicked Shift Duties")
+    customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+    Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+    content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+    content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+    LookUp_label = customtkinter.CTkLabel(content_frame, text="Shift Duties Checklist", font=(Hanuman, 80), text_color="black",underline= False)
+    LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    
+    # Ensure the row and column in content_frame can expand to fill the space
+    content_frame.grid_rowconfigure(0, weight=1)
+    content_frame.grid_columnconfigure(0, weight=1)
+    
 
 def viewEmployeePerformance_clicked():
     print("Clicked View Employee Performance")
@@ -214,6 +226,11 @@ def utilitiesButton_clicked():
         content_frame.grid_rowconfigure(1, weight=1)
         content_frame.grid_rowconfigure(2, weight=0)
         content_frame.grid_columnconfigure(0, weight=1)
+def contactInventory_clicked():
+    print("Clicked Contact Inventory Supplier")
+
+def placeOrder_clicked():
+    print("Clicked Place Order")
 
 # Time Clock
 def timeClockButton_clciked():
