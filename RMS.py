@@ -3,6 +3,7 @@ from tkinter import ttk
 import customtkinter
 from PIL import Image
 import SQLConnection
+import Email_Inventory_Supplier
 
 #Interface for Manager
 customtkinter.set_appearance_mode("Light")
@@ -216,7 +217,7 @@ def utilitiesButton_clicked():
         inventoryButtons_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
         inventoryButtons_frame.grid(row = 2, column = 0, padx = 20, pady = 20, columnspan = 2, sticky="ew")
         
-        contactSupplier_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Contact Inventory Supplier")
+        contactSupplier_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Contact Inventory Supplier", command = contactInventory_clicked)
         placeOrder_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Place Order Restock")
         
         contactSupplier_button.grid(row = 0, column = 0, padx = 15, pady= 15)
@@ -228,6 +229,7 @@ def utilitiesButton_clicked():
         content_frame.grid_columnconfigure(0, weight=1)
 def contactInventory_clicked():
     print("Clicked Contact Inventory Supplier")
+    Email_Inventory_Supplier.sendEmail()
 
 def placeOrder_clicked():
     print("Clicked Place Order")
