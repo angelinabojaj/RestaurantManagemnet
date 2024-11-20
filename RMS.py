@@ -1,6 +1,8 @@
 from tkinter import *
+from tkinter import ttk
 import customtkinter
 from PIL import Image
+import SQLConnection
 
 #Interface for Manager
 customtkinter.set_appearance_mode("Light")
@@ -120,11 +122,46 @@ def utilitiesButton_clicked():
         content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Utilities", font=(Hanuman, 80), text_color="black",underline= False)
-        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
-    
+        utilitiesLabel = customtkinter.CTkLabel(content_frame, text="Inventory Mangement", font=(Hanuman, 40), text_color="black")
+        utilitiesLabel.grid(row=0, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+
+        inventory = SQLConnection.fetch_all("SELECT * FROM inventory")
+        print(inventory)
+        
+        inventoryTable = ttk.Treeview(content_frame, columns=("Item ID", "Item Name","Item Quantity", "Ran Out"), show = "headings")
+        
+        inventoryTable.heading("Item ID", text = "Item ID")
+        inventoryTable.heading("Item Name", text = "Item Name")
+        inventoryTable.heading("Item Quantity", text = "Item Quantity")
+        inventoryTable.heading("Ran Out", text = "Ran Out")
+        
+        inventoryTable.column("Item ID", anchor="center", width=60)
+        inventoryTable.column("Item Name", anchor="center", width=60)
+        inventoryTable.column("Item Quantity", anchor="center", width=60)
+        inventoryTable.column("Ran Out", anchor="center", width=60)
+        
+        for item in inventory:
+            inventoryTable.insert("", "end", values=item)
+        
+        scrollbar = ttk.Scrollbar(inventoryTable, orient="vertical", command = inventoryTable.yview)
+        inventoryTable.configure(yscroll = scrollbar.set)
+        scrollbar.pack(side="right", fill="y")
+        
+        inventoryTable.grid(row = 1, column = 0, padx = 20, pady = 20, sticky = "nsew")
+        scrollbar.grid(row = 1, column = 1, sticky = "ns")
+        
+        inventoryButtons_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
+        inventoryButtons_frame.grid(row = 2, column = 0, padx = 20, pady = 20, columnspan = 2, sticky="ew")
+        
+        contactSupplier_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Contact Inventory Supplier")
+        placeOrder_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Place Order Restock")
+        
+        contactSupplier_button.grid(row = 0, column = 0, padx = 15, pady= 15)
+        placeOrder_button.grid(row = 0, column = 1, padx = 15, pady = 15)
+        
         # Ensure the row and column in content_frame can expand to fill the space
-        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_rowconfigure(1, weight=1)
+        content_frame.grid_rowconfigure(2, weight=0)
         content_frame.grid_columnconfigure(0, weight=1)
 
 # Time Clock
@@ -225,17 +262,17 @@ def homeButton_click(): # this button will switch from manager to employee view 
     # Employee Button Definitions
     
     # Look Up Button
-    def lookUpButton_clicked():
-        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
-        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+        def lookUpButton_clicked():
+            content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
+            content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Look Up", font=(Hanuman, 80), text_color="black",underline= True)
-        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
-    
-        # Ensure the row and column in content_frame can expand to fill the space
-        content_frame.grid_rowconfigure(0, weight=1)
-        content_frame.grid_columnconfigure(0, weight=1)
-        
+            LookUp_label = customtkinter.CTkLabel(content_frame, text="Look Up", font=(Hanuman, 80), text_color="black",underline= True)
+            LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+            
+            # Ensure the row and column in content_frame can expand to fill the space
+            content_frame.grid_rowconfigure(0, weight=1)
+            content_frame.grid_columnconfigure(0, weight=1)
+                
     
     
     # Start Order Button
@@ -444,8 +481,8 @@ def homeButton_click(): # this button will switch from manager to employee view 
     logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100) # Just Logo No Command
     homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100,command= homeButton_click)
     MenuButton = customtkinter.CTkButton(left_frame, text="Menu", width=200, height=100,command=menuButton_clicked)
-    lookUpButton = customtkinter.CTkButton(left_frame, text="Look Up (Allergies)", width=200, height=100, command = lookUpButton_clicked)
-    lookUpButton = customtkinter.CTkButton(left_frame, text="Look Up (Allergies)", width=200, height=100, command = lookUpButton_clicked)
+    # lookUpButton = customtkinter.CTkButton(left_frame, text="Look Up (Allergies)", width=200, height=100, command = lookUpButton_clicked)
+    # lookUpButton = customtkinter.CTkButton(left_frame, text="Look Up (Allergies)", width=200, height=100, command = lookUpButton_clicked)
     startOrderButton = customtkinter.CTkButton(left_frame, text="Start Order", width=200, height=100,command=startOrder_clicked)
     viewOrdersButton = customtkinter.CTkButton(left_frame, text="View Active Orders", width=200, height=100, command = viewOrder_clicked)
     tableManagementButton = customtkinter.CTkButton(left_frame, text="Table Management", width=200, height=100, command = tableManagement_clicked)

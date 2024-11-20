@@ -5,18 +5,35 @@ import mysql.connector
 connection = mysql.connector.connect(
         host="127.0.0.1", # Subject to change
         user = "root", # Subject to change
-        password = "mike12189", # Put your root password here
+        password = "334Mommy!!", # Put your root password here
         database = "rms") # Put your database name here
 
 mycursor = connection.cursor()
 
-mycursor.execute("SELECT * FROM menu")
+mycursor.execute("SELECT * FROM employee")
 
 myresult = mycursor.fetchall()
 
-for x in myresult:
-        print(x)
+# Fetch_All
+        # If your calling a table to be viewed be sure to call this function.
+def fetch_all(query):
+   try:
+        connection = mysql.connector.connect(
+        host="127.0.0.1", # Subject to change
+        user = "root", # Subject to change
+        password = "334Mommy!!", # Put your root password here
+        database = "rms" # Put your database name here
+        )
+        mycursor = connection.cursor()
+        mycursor.execute(query)
+        results = mycursor.fetchall()
+        connection.close()
+        return results
 
+   except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        return []
+                
 # Functions For Different Tables
         # Import this file into the GUI (Which it is already)
         # Functions can be called by using the file import name followed my a decimal.
@@ -68,3 +85,8 @@ def show_absent_request():
         #  Add code to GUI for display
         
         print("Absent Request Shown")
+
+def show_inventory():
+        inventory = mycursor.fetchall("SELECT * FROM inventory")
+        
+        print("Inventory Shown")
