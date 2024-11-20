@@ -70,23 +70,70 @@ content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="DOESNT WORK: Employee View", width=100, height= 60)
 switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
 
-# Schedule Button
+# Schedule Button & Its Corresponding Buttons
 def scheduleButton_clicked():
         customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
-        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+        content_frame.grid(row=1, column=1, rowspan = 3, columnspan=8, sticky="nswe")
 
         schedueleTitle_label = customtkinter.CTkLabel(content_frame, text="Scheduele", font=(Hanuman, 40), text_color="black",underline= False)
-        schedueleTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")
+        schedueleTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nw")
         
         schedueleTitle_description = customtkinter.CTkLabel(content_frame, text="Shifts are created on a separate system (Google Calendars) and imported into the system via a table. Time off requests are made to be sent to the manager via email.", font=(Hanuman, 18), text_color="black")
-        schedueleTitle_description.grid(row=0, column=0, padx=40, pady=40, sticky="nsew")
+        schedueleTitle_description.grid(row=1, column=0, padx=20, pady=20, sticky="w")
     
-        # Ensure the row and column in content_frame can expand to fill the space
-        content_frame.grid_rowconfigure(0, weight=1)
+        scheduele = SQLConnection.fetch_all("SELECT * FROM scheduele")
+        print(scheduele)
+        
+        schedueleTable = ttk.Treeview(content_frame, columns=("Employee ID Number", "Employee Name","Shift Type", "Shift Time"), show = "headings")
+        
+        schedueleTable.heading("Employee ID Number", text = "Employee ID Number")
+        schedueleTable.heading("Employee Name", text = "Employee Name")
+        schedueleTable.heading("Shift Type", text = "Shift Time")
+        schedueleTable.heading("Shift Time", text = "Shift Time")
+        
+        schedueleTable.column("Employee ID Number", anchor="center", width=60)
+        schedueleTable.column("Employee Name", anchor="center", width=60)
+        schedueleTable.column("Shift Type", anchor="center", width=60)
+        schedueleTable.column("Shift Time", anchor="center", width=60)
+        
+        for item in scheduele:
+            schedueleTable.insert("", "end", values=item)
+        
+        scrollbar = ttk.Scrollbar(schedueleTable, orient="vertical", command = schedueleTable.yview)
+        schedueleTable.configure(yscroll = scrollbar.set)
+        scrollbar.pack(side="right", fill="y")
+        
+        schedueleTable.grid(row = 2, column = 0, padx = 20, pady = 20, sticky = "nsew")
+        scrollbar.grid(row = 2, column = 1, sticky = "ns")
+        
+        inventoryButtons_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
+        inventoryButtons_frame.grid(row = 3, column = 0, padx = 20, pady = 20, columnspan = 2, sticky="ew")
+        
+        makeChanges_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Make Scheduele Changes", command = makeScheduele_clicked)
+        shiftDuties_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Shift Duties Checklist", command = shiftDuties_clicked)
+        viewEmployeePerformance_button = customtkinter.CTkButton(inventoryButtons_frame, text = "View Employee Performance", command = viewEmployeePerformance_clicked)
+        
+        makeChanges_button.grid(row = 0, column = 0, padx = 15, pady= 15)
+        shiftDuties_button.grid(row = 0, column = 1, padx = 15, pady = 15)
+        viewEmployeePerformance_button.grid(row = 0, column = 2, padx = 15, pady = 15)
+        
+        content_frame.grid_rowconfigure(1, weight=1)
+        content_frame.grid_rowconfigure(2, weight=0)
         content_frame.grid_columnconfigure(0, weight=1)
 
+# Make Scheduele Changes Button
+def makeScheduele_clicked():
+    print("Clicked Make Scheduele")
+
+# Shift Duties Button
+def shiftDuties_clicked():
+    print("Clicked Shift Duties")
+
+def viewEmployeePerformance_clicked():
+    print("Clicked View Employee Performance")
+        
 # Earnings Button
 def earningsButton_clicked():
         customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
