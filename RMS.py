@@ -44,7 +44,7 @@ rect_height = screen_height
 
 managementUI.grid_rowconfigure(0, weight=0)
 managementUI.grid_rowconfigure(1, weight=1)
-managementUI.grid_columnconfigure(0, weight=1)
+managementUI.grid_columnconfigure(0, weight=0)
 managementUI.grid_columnconfigure(1, weight=1)
 
 # Create a top frame across the screen width 
@@ -52,7 +52,7 @@ top_frame = customtkinter.CTkFrame(managementUI, width=screen_width, height=150,
 top_frame.grid(row=0, column=0, columnspan=2, sticky="ew")
 
 top_label = customtkinter.CTkLabel(top_frame, text="The Anything Coney Island", text_color="black", font=("Hanuman", 78)) 
-top_label.grid(row=0, column=2, pady=35, padx=180) #the pady and padx controls the height of the top rectangle box
+top_label.grid(row=0, column=2, pady=55, padx=180) #the pady and padx controls the height of the top rectangle box
 
 top_frame.grid_rowconfigure(0,weight=1)
 top_frame.grid_columnconfigure(0,weight=1)
@@ -63,8 +63,12 @@ left_frame = customtkinter.CTkFrame(managementUI, width=rect_width, height=rect_
 left_frame.grid(row=0, column=0, rowspan=8, sticky="nsw")
 
 # Create a main content frame for dynamic content 
-content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="red") 
+content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0")
 content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+# Making Notifications Layout For Rita
+notificationsLabel = customtkinter.CTkLabel(content_frame, text="Notification Manager", text_color="black", font=("Hanuman", 40)) 
+notificationsLabel.grid(row = 1, column = 0, rowspan = 4,  padx = 20, pady = 20)
 
 # Manager Button Definitions
 # Button For Manager Switch -> Employee
