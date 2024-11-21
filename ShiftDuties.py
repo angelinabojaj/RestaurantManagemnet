@@ -1,5 +1,10 @@
+import RMS
+
 def hostess_text():
     print("Hostess")
+    
+    
+    
     print("")
 
 def waiter_text():
