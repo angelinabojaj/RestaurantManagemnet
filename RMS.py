@@ -57,7 +57,6 @@ top_label.grid(row=0, column=2, pady=55, padx=180) #the pady and padx controls t
 top_frame.grid_rowconfigure(0,weight=1)
 top_frame.grid_columnconfigure(0,weight=1)
 
-
 # Create a frame to act as the rectangle (background for buttons)
 left_frame = customtkinter.CTkFrame(managementUI, width=rect_width, height=rect_height, fg_color="#525fc7")
 left_frame.grid(row=0, column=0, rowspan=8, sticky="nsw")
@@ -69,6 +68,7 @@ content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 # Making Notifications Layout For Rita
 notificationsLabel = customtkinter.CTkLabel(content_frame, text="Notification Manager", text_color="black", font=("Hanuman", 40)) 
 notificationsLabel.grid(row = 1, column = 0, rowspan = 4,  padx = 20, pady = 20)
+
 
 # Manager Button Definitions
 # Button For Manager Switch -> Employee
