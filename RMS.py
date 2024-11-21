@@ -4,6 +4,7 @@ import customtkinter
 from PIL import Image
 import SQLConnection
 import Email_Inventory_Supplier
+import ShiftDuties
 
 #Interface for Manager
 customtkinter.set_appearance_mode("Light")
@@ -51,7 +52,7 @@ managementUI.grid_columnconfigure(1, weight=1)
 top_frame = customtkinter.CTkFrame(managementUI, width=screen_width, height=150, fg_color="#525fc7") 
 top_frame.grid(row=0, column=0, columnspan=2, sticky="ew")
 
-top_label = customtkinter.CTkLabel(top_frame, text="The Anything Coney Island", text_color="black", font=("Hanuman", 78)) 
+top_label = customtkinter.CTkLabel(top_frame, text="        The Anything Coney Island", text_color="black", font=("Hanuman", 78)) 
 top_label.grid(row=0, column=2, pady=55, padx=180) #the pady and padx controls the height of the top rectangle box
 
 top_frame.grid_rowconfigure(0,weight=1)
@@ -68,7 +69,6 @@ content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 # Making Notifications Layout For Rita
 notificationsLabel = customtkinter.CTkLabel(content_frame, text="Notification Manager", text_color="black", font=("Hanuman", 40)) 
 notificationsLabel.grid(row = 1, column = 0, rowspan = 4,  padx = 20, pady = 20)
-
 
 # Manager Button Definitions
 # Button For Manager Switch -> Employee
@@ -139,19 +139,41 @@ def makeScheduele_clicked():
 # Shift Duties Button
 def shiftDuties_clicked():
     print("Clicked Shift Duties")
-    customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+    
     Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
     content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
     content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-    LookUp_label = customtkinter.CTkLabel(content_frame, text="Shift Duties Checklist", font=(Hanuman, 80), text_color="black",underline= False)
-    LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+    shiftDuties_label = customtkinter.CTkLabel(content_frame, text="Shift Duties Checklist (By Shift Type)", font=(Hanuman, 40), text_color="black")
+    shiftDuties_label.grid(row=0, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+    
+    shiftDuties_description = customtkinter.CTkLabel(content_frame, text="Each shift is divided by the location. On floor duties refer to those directly interacting with customers on the restaurant floor. Off floor duties refer to those working in the back of the restaurant who dont directly interact with customers. These series of checklists are used by your managers to help train new staff into their positions by their shift.", font=(Hanuman, 20), text_color="black")
+    shiftDuties_description.grid(row=1, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+    
+    shiftDuties_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
+    shiftDuties_frame.grid(row = 2, column = 0, padx = 20, pady = 20, rowspan = 4, columnspan = 2, sticky="ew")
+        
+    host_button = customtkinter.CTkButton(shiftDuties_frame, text = "Host", command = ShiftDuties.hostButton_clicked())
+    host_button.grid(row = 1, column = 1, padx = 10, pady = 10)
+    
+    waiter_button = customtkinter.CTkButton(shiftDuties_frame, text = "Waiter", command = ShiftDuties.waiterButton_clicked())
+    waiter_button.grid(row = 2, column = 1, padx = 10, pady = 10)
+    
+    busser_button = customtkinter.CTkButton(shiftDuties_frame, text = "Busser", command = ShiftDuties.busserButton_clicked())
+    busser_button.grid(row = 3, column = 1, padx = 10, pady = 10)
+    
+    dishWasher_button = customtkinter.CTkButton(shiftDuties_frame, text = "Dish Washer", command = ShiftDuties.dishwasherButton_clicked())
+    dishWasher_button.grid(row = 1, column = 2, padx = 10, pady = 10)
+    
+    cook_button = customtkinter.CTkButton(shiftDuties_frame, text = "Cook", command = ShiftDuties.cookButton_clicked())
+    cook_button.grid(row = 2, column = 2, padx = 10, pady = 10)
     
     # Ensure the row and column in content_frame can expand to fill the space
     content_frame.grid_rowconfigure(0, weight=1)
     content_frame.grid_columnconfigure(0, weight=1)
+    shiftDuties_frame.grid_rowconfigure((1,2,3), weight = 1)
+    shiftDuties_frame.grid_columnconfigure((1,2), weight = 1)
     
-
 def viewEmployeePerformance_clicked():
     print("Clicked View Employee Performance")
         
@@ -231,9 +253,11 @@ def utilitiesButton_clicked():
         content_frame.grid_rowconfigure(1, weight=1)
         content_frame.grid_rowconfigure(2, weight=0)
         content_frame.grid_columnconfigure(0, weight=1)
+        
+# Contact Inventory Supplier Button Function
 def contactInventory_clicked():
     print("Clicked Contact Inventory Supplier")
-    Email_Inventory_Supplier.sendEmail()
+    Email_Inventory_Supplier.sendEmail() # Email sent from theanythingconeyisland@gmail.com to inventorysupplierou@gmail.com
 
 def placeOrder_clicked():
     print("Clicked Place Order")
@@ -345,7 +369,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
             
             # Ensure the row and column in content_frame can expand to fill the space
             content_frame.grid_rowconfigure(0, weight=1)
-            content_frame.grid_columnconfigure(0, weight=1)
+            content_frame.grid_columnconfigure(0, weight=1)    
                 
     
     

@@ -1,24 +1,20 @@
 import RMS
 
-def hostess_text():
-    print("Hostess")
+    # Button Functions Specfically For Shift Duties Screen
+def hostButton_clicked():
+    print("Host Clicked")
+        
+def waiterButton_clicked():
+    print("Waiter Clicked")
     
+def busserButton_clicked():
+    print("Busser Clicked")
     
+def dishwasherButton_clicked():
+    print("Dish Washer Clicked")
     
-    print("")
-
-def waiter_text():
-    print("Waiter")
-    print("")
+def cookButton_clicked():
+    print("Cook Clicked")
     
-def busser_text():
-    print("Buser")
-    print("")
-
-def dishwasher_text():
-    print("Dish Washer")
-    print("")
-
-def cook_text():
-    print("Cook")
-    print("")
+def viewEmployeePerformance_clicked():
+    print("Clicked View Employee Performance")
