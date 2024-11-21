@@ -301,6 +301,10 @@ def homeButton_click(): # this button will switch from manager to employee view 
     content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="white") 
     content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
+    def clear_content_frame():
+        for widget in content_frame.winfo_children():
+            widget.destroy()
+
     #Food items class
     class FoodItem:
         def __init__(self,name,description,price,image_path):
@@ -326,10 +330,32 @@ def homeButton_click(): # this button will switch from manager to employee view 
         FoodItem("Peppermint Mocha Latte","Peppermint, Coffe Beans\n, Choice of Milk","$4.99","RMS_Database_Pictures\Peppermint Mocha.jpg"),
     ]
     # Button definitions 
+    table_orders = {table: "" for table in ["1","2","3","4","5","6","7","8"]}
+    order_counts = {item.name:0 for item in menu_items}
+    # selected_table = "5"
 
-    def specialsButton_clicked(): #Specials interface
+    #Function to update the display text with the current order
+    def update_order_display(content_frame, order_display, table_dropdown):
+        selected_table = table_dropdown.get()
+        order_text = "Current Order:\n"
+        for item, count in order_counts.items():
+            if count > 0:
+                order_text += f"{item}: {count}\n"
+        order_display.configure(text=order_text)
+        if selected_table:
+             table_orders[selected_table] = order_text
+
+    def food_button_clicked(food_item, content_frame, order_display, table_dropdown):
+        order_counts[food_item.name] += 1
+        update_order_display(content_frame, order_display,table_dropdown)
+
+    def specialsButton_clicked():
+        pass #Specials interface
     
     # Employee Button Definitions
+
+    def set_table(selection):
+        print(f'Selected table: {selection}')
     
     # Look Up Button
         def lookUpButton_clicked():
@@ -342,99 +368,149 @@ def homeButton_click(): # this button will switch from manager to employee view 
             # Ensure the row and column in content_frame can expand to fill the space
             content_frame.grid_rowconfigure(0, weight=1)
             content_frame.grid_columnconfigure(0, weight=1)
+
+    def send_order_to_kitchen(content_frame, order_display,table_dropdown):
+        selected_table = table_dropdown.get()  # Get the selected table from the dropdown
+
+    # If no valid table is selected (i.e., "Select a Table"), do nothing
+        if selected_table == "Select a Table":
+            for item in order_counts:
+                order_counts[item] = 0
+            table_orders[selected_table] = ""
+            return  # Exit early, do nothing
+        else:
+            print(f"Order sent to kitchen for table {selected_table}")
+            print(f"Order details:\n{table_orders[selected_table]}")
+
+    # Reset all order counts to zero
+            for item in order_counts:
+                order_counts[item] = 0
+    
+    # Clear the order for the selected table
+            table_orders[selected_table] = ""
+
+    # Update the order display to reflect the cleared order
+            update_order_display(content_frame, order_display, table_dropdown)
+
+    # Optional: Display confirmation message
+            success_label = customtkinter.CTkLabel(
+                content_frame,
+                text=f"Order for table {selected_table} sent to kitchen successfully!",
+                font=("Hanuman", 15),
+                text_color="green",
+            )
+            success_label.grid(row=6, column=0, columnspan=3, padx=10, pady=10)
+
+    # Reset the order display label text
+            order_display.configure(text="Current Order:\n")  # Reset the display to indicate no order is active
                 
     
     
     # Start Order Button
     def startOrder_clicked():
-        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
-        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        SendToKitchenButton= customtkinter.CTkButton(content_frame,text="Send To Kitchen",font=(Hanuman,25))
-        SendToKitchenButton.grid(row=5, column=0)
+        employeeUI.grid_rowconfigure(1,weight=1)
+        employeeUI.grid_columnconfigure(1,weight=1)
+        
+
+        for widget in content_frame.winfo_children():
+             widget.destroy()
+
+        content_frame1 = customtkinter.CTkFrame(employeeUI,width=1350,height=600, fg_color="#97B9E0") 
+        content_frame1.grid(row=1, column=1, columnspan=8, sticky="nswe")
+      
+
+        order_display = customtkinter.CTkLabel(content_frame1, text="Current Order:", font=("Hanuman", 15), text_color="black")
+        order_display.grid(row=5, column=3)
 
         tablenums = ['1','2','3','4','5','6','7','8']
-        TableDropBox = customtkinter.CTkComboBox(content_frame, values=tablenums)
+        TableDropBox = customtkinter.CTkComboBox(content_frame1, values=tablenums,command=set_table)
         TableDropBox.set("Select a Table")
         TableDropBox.grid(row=0 , column=0 )
 
-        specialsTitle_label = customtkinter.CTkLabel(content_frame, text="Place Order", font=(Hanuman, 30), text_color="black")
+        SendToKitchenButton= customtkinter.CTkButton(content_frame1,text="Send To Kitchen",font=(Hanuman,25),command=send_order_to_kitchen(content_frame, order_display, TableDropBox))
+        SendToKitchenButton.grid(row=5, column=0)
+
+        specialsTitle_label = customtkinter.CTkLabel(content_frame1, text="Place Order", font=(Hanuman, 30), text_color="black")
         specialsTitle_label.grid(row=0, column=3)  # Center the label within the frame
 
-        burgerPic_button = customtkinter.CTkButton(content_frame, image=burgerPic, text="", width=110, height=100) 
+        order_display = customtkinter.CTkLabel(content_frame1,text= "Current Order:\n", font=(Hanuman,15), text_color="black")
+        order_display.grid(row=5, column=3)
+
+        burgerPic_button = customtkinter.CTkButton(content_frame1, image=burgerPic, text="", width=110, height=100,command=lambda: food_button_clicked(menu_items[0],content_frame1, order_display, TableDropBox)) 
         burgerPic_button.grid(row=1, column=0)
-        burgerDescription = customtkinter.CTkLabel(content_frame, text="All American\n Burger",font=(Hanuman,15), text_color="black")
+        burgerDescription = customtkinter.CTkLabel(content_frame1, text="All American\n Burger",font=(Hanuman,15), text_color="black")
         burgerDescription.grid(row=2,column=0)
 
-        steakPic_button = customtkinter.CTkButton(content_frame, image=SteakPic, text="", width=30, height=10)
+        steakPic_button = customtkinter.CTkButton(content_frame1, image=SteakPic, text="", width=30, height=100,command=lambda: food_button_clicked(menu_items[5],content_frame1, order_display, TableDropBox))
         steakPic_button.grid(row=1, column=1)
-        steakDescription = customtkinter.CTkLabel(content_frame, text="100% Totally Steak",font=(Hanuman,15), text_color="black")
+        steakDescription = customtkinter.CTkLabel(content_frame1, text="100% Totally Steak",font=(Hanuman,15), text_color="black")
         steakDescription.grid(row=2, column=1)
 
-        salmonPic_button = customtkinter.CTkButton(content_frame, image=saladPic, text="", width=110, height=100)
+        salmonPic_button = customtkinter.CTkButton(content_frame1, image=saladPic, text="", width=110, height=100,command=lambda: food_button_clicked(menu_items[7],content_frame1, order_display, TableDropBox))
         salmonPic_button.grid(row=1, column=2)
-        salmonDescription = customtkinter.CTkLabel(content_frame, text="Just Caught Salmon",font=(Hanuman,15), text_color="black")
+        salmonDescription = customtkinter.CTkLabel(content_frame1, text="Just Caught Salmon",font=(Hanuman,15), text_color="black")
         salmonDescription.grid(row=2, column=2)
 
-        cevapiPic_button = customtkinter.CTkButton(content_frame, image=cevapiPic, text="", width=110, height=100)
+        cevapiPic_button = customtkinter.CTkButton(content_frame1, image=cevapiPic, text="", width=110, height=100,command=lambda: food_button_clicked(menu_items[3],content_frame1, order_display, TableDropBox))
         cevapiPic_button.grid(row=1, column=3)
-        cevapiDescription = customtkinter.CTkLabel(content_frame, text="Cevapi",font=(Hanuman,15), text_color="black")
+        cevapiDescription = customtkinter.CTkLabel(content_frame1, text="Cevapi",font=(Hanuman,15), text_color="black")
         cevapiDescription.grid(row=2, column=3)
 
-        CocaColaPic_button = customtkinter.CTkButton(content_frame, image=CocaColaPic, text="", width=110, height=100)
+        CocaColaPic_button = customtkinter.CTkButton(content_frame1, image=CocaColaPic, text="", width=110, height=100,command=lambda: food_button_clicked(menu_items[10],content_frame1, order_display, TableDropBox))
         CocaColaPic_button.grid(row=3, column=3)
-        CocaColaPicDescription = customtkinter.CTkLabel(content_frame, text="CocaCola",font=(Hanuman,15), text_color="black")
+        CocaColaPicDescription = customtkinter.CTkLabel(content_frame1, text="CocaCola",font=(Hanuman,15), text_color="black")
         CocaColaPicDescription.grid(row=4, column=3)
         
-        chickenFingersPic_button = customtkinter.CTkButton(content_frame, image=chickenFingersPic, text="", width=110, height=100)
+        chickenFingersPic_button = customtkinter.CTkButton(content_frame1, image=chickenFingersPic, text="", width=110, height=100,command=lambda: food_button_clicked(menu_items[4],content_frame1, order_display, TableDropBox))
         chickenFingersPic_button.grid(row=1, column=5)
-        chickenFingersPicDescription = customtkinter.CTkLabel(content_frame, text="Chicken Fingers",font=(Hanuman,15), text_color="black")
+        chickenFingersPicDescription = customtkinter.CTkLabel(content_frame1, text="Chicken Fingers",font=(Hanuman,15), text_color="black")
         chickenFingersPicDescription.grid(row=2, column=5)
         
-        eggsPic_button = customtkinter.CTkButton(content_frame, image=eggsPic, text="", width=110, height=100)
+        eggsPic_button = customtkinter.CTkButton(content_frame1, image=eggsPic, text="", width=110, height=100,command=lambda: food_button_clicked(menu_items[1],content_frame1, order_display, TableDropBox))
         eggsPic_button.grid(row=1, column=6)
-        eggsPicDescription = customtkinter.CTkLabel(content_frame, text="Eggs Benedict",font=(Hanuman,15), text_color="black")
+        eggsPicDescription = customtkinter.CTkLabel(content_frame1, text="Eggs Benedict",font=(Hanuman,15), text_color="black")
         eggsPicDescription.grid(row=2, column=6)
         
-        saladPic_button = customtkinter.CTkButton(content_frame, image=salmonPic, text="", width=110, height=100)
+        saladPic_button = customtkinter.CTkButton(content_frame1, image=salmonPic, text="", width=110, height=100,command=lambda: food_button_clicked(menu_items[6],content_frame1, order_display, TableDropBox))
         saladPic_button.grid(row=3, column=0)
-        saladPicDescription = customtkinter.CTkLabel(content_frame, text="Ceaser Salad",font=(Hanuman,15), text_color="black")
+        saladPicDescription = customtkinter.CTkLabel(content_frame1, text="Ceaser Salad",font=(Hanuman,15), text_color="black")
         saladPicDescription.grid(row=4, column=0)
         
-        lavenderlemonadePic_button = customtkinter.CTkButton(content_frame, image=lavenderlemonadePic, text="", width=110, height=100)
+        lavenderlemonadePic_button = customtkinter.CTkButton(content_frame1, image=lavenderlemonadePic, text="", width=110, height=100,command=lambda: food_button_clicked(menu_items[11],content_frame1, order_display, TableDropBox))
         lavenderlemonadePic_button.grid(row=3, column=1)
-        lavenderlemonadePicDescription = customtkinter.CTkLabel(content_frame, text="Lavendar Lemonade",font=(Hanuman,15), text_color="black")
+        lavenderlemonadePicDescription = customtkinter.CTkLabel(content_frame1, text="Lavendar Lemonade",font=(Hanuman,15), text_color="black")
         lavenderlemonadePicDescription.grid(row=4, column=1)
         
-        lemonadePic_button = customtkinter.CTkButton(content_frame, image=lemonadePic, text="", width=100, height=80)
+        lemonadePic_button = customtkinter.CTkButton(content_frame1, image=lemonadePic, text="", width=100, height=80,command=lambda: food_button_clicked(menu_items[9],content_frame1, order_display, TableDropBox))
         lemonadePic_button.grid(row=3, column=2)
-        lemonadePicDescription = customtkinter.CTkLabel(content_frame, text="Lemonade",font=(Hanuman,15), text_color="black")
+        lemonadePicDescription = customtkinter.CTkLabel(content_frame1, text="Lemonade",font=(Hanuman,15), text_color="black")
         lemonadePicDescription.grid(row=4, column=2)
         
-        meditteranPic_button = customtkinter.CTkButton(content_frame, image=meditteranPic, text="", width=100, height=80)
+        meditteranPic_button = customtkinter.CTkButton(content_frame1, image=meditteranPic, text="", width=100, height=80,command=lambda: food_button_clicked(menu_items[2],content_frame1, order_display, TableDropBox))
         meditteranPic_button.grid(row=1, column=4)
-        meditteranPicDescription = customtkinter.CTkLabel(content_frame, text="Meditteran Dish",font=(Hanuman,15), text_color="black")
+        meditteranPicDescription = customtkinter.CTkLabel(content_frame1, text="Meditteran Dish",font=(Hanuman,15), text_color="black")
         meditteranPicDescription.grid(row=2, column=4)
         
-        peppermintMochaPic_button = customtkinter.CTkButton(content_frame, image=peppermintMochaPic, text="", width=100, height=80)
+        peppermintMochaPic_button = customtkinter.CTkButton(content_frame1, image=peppermintMochaPic, text="", width=100, height=80,command=lambda: food_button_clicked(menu_items[13],content_frame1, order_display, TableDropBox))
         peppermintMochaPic_button.grid(row=3, column=4)
-        peppermintMochaPicDescription = customtkinter.CTkLabel(content_frame, text="Peppermint Mocha",font=(Hanuman,15), text_color="black")
+        peppermintMochaPicDescription = customtkinter.CTkLabel(content_frame1, text="Peppermint Mocha",font=(Hanuman,15), text_color="black")
         peppermintMochaPicDescription.grid(row=4, column=4)
         
-        mocktailPic_button = customtkinter.CTkButton(content_frame, image=mocktailPic, text="", width=100, height=80)
+        mocktailPic_button = customtkinter.CTkButton(content_frame1, image=mocktailPic, text="", width=100, height=80,command=lambda: food_button_clicked(menu_items[12],content_frame1, order_display, TableDropBox))
         mocktailPic_button.grid(row=3, column=5)
-        mocktailPicDescription = customtkinter.CTkLabel(content_frame, text="Mocktail",font=(Hanuman,15), text_color="black")
+        mocktailPicDescription = customtkinter.CTkLabel(content_frame1, text="Mocktail",font=(Hanuman,15), text_color="black")
         mocktailPicDescription.grid(row=4, column=5)
        
-        waterPic_button = customtkinter.CTkButton(content_frame, image=waterPic, text="", width=100, height=80)
+        waterPic_button = customtkinter.CTkButton(content_frame1, image=waterPic, text="", width=100, height=80,command=lambda: food_button_clicked(menu_items[8],content_frame1, order_display, TableDropBox))
         waterPic_button.grid(row=3, column=6)
-        waterPicDescription = customtkinter.CTkLabel(content_frame, text="Water",font=(Hanuman,15), text_color="black")
+        waterPicDescription = customtkinter.CTkLabel(content_frame1, text="Water",font=(Hanuman,15), text_color="black")
         waterPicDescription.grid(row=4, column=6)
 
         for i in range(5):
-            content_frame.grid_rowconfigure(i, weight=1)
+            content_frame1.grid_rowconfigure(i, weight=1)
         for i in range(7):
-            content_frame.grid_columnconfigure(i, weight=1)
+            content_frame1.grid_columnconfigure(i, weight=1)
 
 
     def menuButton_clicked():
@@ -500,16 +576,29 @@ def homeButton_click(): # this button will switch from manager to employee view 
     
     # View Order Button
     def viewOrder_clicked():
+    
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        burgerPic = customtkinter.CTkImage(light_image=Image.open('RMS_Database_Pictures\All American Burger.jpg'), size=(100, 80)) # Example for burgerPic
+        viewOrdersTitle_label = customtkinter.CTkLabel(content_frame, text="All Active orders", font=(Hanuman, 30), text_color="black")
+        viewOrdersTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
 
-        specialsTitle_label = customtkinter.CTkLabel(content_frame, text="View Order", font=(Hanuman, 80), text_color="black")
-        specialsTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+        row = 1
+        for table, order in table_orders.items():
+            if table == "Select a Table":
+                break
+            else:
+             table_label = customtkinter.CTkLabel(content_frame, text=f"Table {table} Order", font=(Hanuman,20), text_color="black")
+             table_label.grid(row=row, column = 0, padx = 10,pady=10, sticky="w")
 
-        burgerPic_button = customtkinter.CTkButton(content_frame, image=burgerPic, text="", width=100, height=80) 
-        burgerPic_button.grid(row=1, column=0)
+
+             order_display = customtkinter.CTkLabel(content_frame, text=order, font=(Hanuman,15),text_color="black")
+             order_display.grid(row=row, column=1, padx=10, pady=10, sticky="w")
+             row += 1 
+        for i in range(row):
+             content_frame.grid_rowconfigure(i, weight=1)
+        for i in range(2):
+             content_frame.grid_columnconfigure(i, weight=1)
     
         # Ensure the row and column in content_frame can expand to fill the space
         content_frame.grid_rowconfigure(0, weight=1)
