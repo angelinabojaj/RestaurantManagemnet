@@ -1,6 +1,6 @@
 import RMS
 
-    # Button Functions Specfically For Shift Duties Screen
+# Button Functions Specfically For Shift Duties Screen
 def hostButton_clicked():
     print("Host Clicked")
         

@@ -148,24 +148,24 @@ def shiftDuties_clicked():
     shiftDuties_label.grid(row=0, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
     
     shiftDuties_description = customtkinter.CTkLabel(content_frame, text="Each shift is divided by the location. On floor duties refer to those directly interacting with customers on the restaurant floor. Off floor duties refer to those working in the back of the restaurant who dont directly interact with customers. These series of checklists are used by your managers to help train new staff into their positions by their shift.", font=(Hanuman, 20), text_color="black")
-    shiftDuties_description.grid(row=1, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+    shiftDuties_description.grid(row=1, column=0, padx=20, pady=20, sticky="n")  # Center the label within the frame
     
     shiftDuties_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
     shiftDuties_frame.grid(row = 2, column = 0, padx = 20, pady = 20, rowspan = 4, columnspan = 2, sticky="ew")
         
-    host_button = customtkinter.CTkButton(shiftDuties_frame, text = "Host", command = ShiftDuties.hostButton_clicked())
+    host_button = customtkinter.CTkButton(shiftDuties_frame, text = "Host", command = hostButton_clicked)
     host_button.grid(row = 1, column = 1, padx = 10, pady = 10)
     
-    waiter_button = customtkinter.CTkButton(shiftDuties_frame, text = "Waiter", command = ShiftDuties.waiterButton_clicked())
+    waiter_button = customtkinter.CTkButton(shiftDuties_frame, text = "Waiter")
     waiter_button.grid(row = 2, column = 1, padx = 10, pady = 10)
     
-    busser_button = customtkinter.CTkButton(shiftDuties_frame, text = "Busser", command = ShiftDuties.busserButton_clicked())
+    busser_button = customtkinter.CTkButton(shiftDuties_frame, text = "Busser")
     busser_button.grid(row = 3, column = 1, padx = 10, pady = 10)
     
-    dishWasher_button = customtkinter.CTkButton(shiftDuties_frame, text = "Dish Washer", command = ShiftDuties.dishwasherButton_clicked())
+    dishWasher_button = customtkinter.CTkButton(shiftDuties_frame, text = "Dish Washer")
     dishWasher_button.grid(row = 1, column = 2, padx = 10, pady = 10)
     
-    cook_button = customtkinter.CTkButton(shiftDuties_frame, text = "Cook", command = ShiftDuties.cookButton_clicked())
+    cook_button = customtkinter.CTkButton(shiftDuties_frame, text = "Cook")
     cook_button.grid(row = 2, column = 2, padx = 10, pady = 10)
     
     # Ensure the row and column in content_frame can expand to fill the space
@@ -174,6 +174,9 @@ def shiftDuties_clicked():
     shiftDuties_frame.grid_rowconfigure((1,2,3), weight = 1)
     shiftDuties_frame.grid_columnconfigure((1,2), weight = 1)
     
+def hostButton_clicked():
+    ShiftDuties.hostButton_clicked()
+
 def viewEmployeePerformance_clicked():
     print("Clicked View Employee Performance")
         
