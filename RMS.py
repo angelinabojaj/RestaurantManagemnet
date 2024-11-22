@@ -175,7 +175,7 @@ def shiftDuties_clicked():
     shiftDuties_frame.grid_columnconfigure((1,2), weight = 1)
     
 def hostButton_clicked():
-    ShiftDuties.hostButton_clicked()
+    print("Host Button Clicked")
 
 def viewEmployeePerformance_clicked():
     print("Clicked View Employee Performance")
@@ -633,10 +633,13 @@ def homeButton_click(): # this button will switch from manager to employee view 
     # Table Mangement Button
     def tableManagement_clicked():
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
-        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nsew")
 
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Table Management", font=(Hanuman, 80), text_color="black",underline= False)
-        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Table Management", font=(Hanuman, 60), text_color="black")
+        LookUp_label.grid(row=1, column=1, padx=20, pady=20,  sticky="n")
+
+        yourTables_label = customtkinter.CTkLabel(content_frame, text="Your Tables:\n1 2 3", font=(customFont), text_color="black")
+        yourTables_label.grid(row=3, column=0, padx=20, pady=20, sticky="nsew")
     
         # Ensure the row and column in content_frame can expand to fill the space
         content_frame.grid_rowconfigure(0, weight=1)
