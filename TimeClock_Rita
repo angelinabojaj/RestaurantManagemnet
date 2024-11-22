@@ -1,0 +1,61 @@
+import customtkinter
+from datetime import datetime
+
+managmentUI = customtkinter.CTk()
+managmentUI.title("Employee Time Clock")
+
+screen_width = managmentUI.winfo_screenwidth()
+screen_height = managmentUI.winfo_screenheight()
+managmentUI.geometry(f"{screen_width}x{screen_height - 100}+0+0")
+
+
+Clocked_in = False # You can change this to be false whenever they aren't clocked in so you dont need multiple variables :)
+# Clocked_out = False
+
+# now = datetime.now()
+# current_time_label = customtkinter.CTkLabel(managmentUI, text = "Current Date and Time: {now.strftime('%Y-%m-%d %H:%M:%S')}", font = ("Time New Roman", 16))
+# current_time_label.grid(row =0, column =0, columnspan = 1, padx = 16, pady = 16)
+# employee_ID = input( "Employee ID: ")
+
+
+# employee_ID = customtkinter.CTkEntry(managmentUI, width=300, font=("Time New Roman", 25))
+# employee_ID.grid(row =0, column =0, columnspan = 1, padx = 16, pady = 16)
+
+def clock_in_out():
+    global Clocked_in # This is calling the variable from before so it can be used here in this function
+    employee_ID = employee_ID_entry.get()
+    now = datetime.now()
+    current_Time = now.strftime('%Y-%m-%d %H:%M:%S')
+
+    
+    # Logic For SQLConnection will be added here eventually btw
+    if employee_ID:
+        if (Clocked_in):
+            employeeStatus_label.configure(text=f"Employee with {employee_ID} employee ID clocked out at {current_Time}.You are clocked out.")
+            # print(f"Employee with {employee_ID} employee ID clocked in at {now.strftime('%Y-%m-%d %H:%M:%S')}.You are not clocked in. Thank you for your service.")
+            Clocked_in = False
+        
+        else:
+            # print(f"Employee with {employee_ID} employee ID clocked out at {now.strftime('%Y-%m-%d %H:%M:%S')}. You are now clocked out. Have a nice day")
+            employeeStatus_label.configure(text=f"Employee with {employee_ID} employee ID clocked in at {current_Time}.You are clocked in.")
+            Clocked_in = True
+    else:
+        employeeStatus_label.configure(text="Inavlid Employee ID. Please Try Again")
+        
+        
+now = datetime.now()
+
+current_time_label = customtkinter.CTkLabel(managmentUI, text = " Current Date and Time: [now.strftime('%Y-%m-%d %H:%M:%S')]")
+current_time_label.grid(row = 0, column = 0, columnspan = 2, padx = 16, pady = 16)
+
+employee_ID_entry = customtkinter.CTkEntry(managmentUI, width = 300, font = ("Times New Roman", 16))
+employee_ID_entry.grid(row = 1, column = 1, padx = 16, pady = 16, sticky = "w")
+
+
+confirm_Button= customtkinter.CTkButton(managmentUI, text = "Confirm", font = ("Time New Roman", 25), command=clock_in_out)
+confirm_Button.grid(row = 2, column = 0, columnspan = 2, padx = 20, pady = 20)
+
+employeeStatus_label = customtkinter.CTkLabel(managmentUI, text = "", font = ("Times New Roman", 14))
+employeeStatus_label.grid(row = 3, column = 0, columnspan = 2, padx = 20, pady = 20)
+    
+managmentUI.mainloop()
