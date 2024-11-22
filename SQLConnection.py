@@ -5,7 +5,7 @@ import mysql.connector
 connection = mysql.connector.connect(
         host="127.0.0.1", # Subject to change
         user = "root", # Subject to change
-        password = "mike12189", # Put your root password here
+        password = "334Mommy!!", # Put your root password here
         database = "rms") # Put your database name here
 
 mycursor = connection.cursor()
@@ -21,7 +21,7 @@ def fetch_all(query):
         connection = mysql.connector.connect(
         host="127.0.0.1", # Subject to change
         user = "root", # Subject to change
-        password = "mike12189", # Put your root password here
+        password = "334Mommy!!", # Put your root password here
         database = "rms" # Put your database name here
         )
         mycursor = connection.cursor()

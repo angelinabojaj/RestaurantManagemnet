@@ -179,6 +179,37 @@ def hostButton_clicked():
 
 def viewEmployeePerformance_clicked():
     print("Clicked View Employee Performance")
+    Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
+    content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
+    content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+    utilitiesLabel = customtkinter.CTkLabel(content_frame, text="Employee Performance Ratings", font = Hanuman, text_color="black")
+    utilitiesLabel.grid(row=0, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+
+    employeePerformance = SQLConnection.fetch_all("SELECT employeeIDNumber, employeeName, averagePerformanceNumber FROM employee ORDER BY averagePerformanceNumber DESC;")
+        
+    employeePerformanceTable = ttk.Treeview(content_frame, columns=("Employee ID", "Employee Name","Average Performance Number"), show = "headings")
+        
+    employeePerformanceTable.heading("Employee ID", text = "Employee ID")
+    employeePerformanceTable.heading("Employee Name", text = "Employee Name")
+    employeePerformanceTable.heading("Average Performance Number", text = "Average Performance Number")
+        
+    employeePerformanceTable.column("Employee ID", anchor="center", width=60)
+    employeePerformanceTable.column("Employee Name", anchor="center", width=60)
+    employeePerformanceTable.column("Average Performance Number", anchor="center", width=60)
+        
+    for item in employeePerformance:
+        employeePerformanceTable.insert("", "end", values=item)
+        
+    scrollbar = ttk.Scrollbar(employeePerformanceTable, orient="vertical", command = employeePerformanceTable.yview)
+    employeePerformanceTable.configure(yscroll = scrollbar.set)
+        
+    employeePerformanceTable.grid(row = 1, column = 0, padx = 20, pady = 20, sticky = "nsew")
+    scrollbar.grid(row = 1, column = 1, sticky = "ns")
+        
+    # Ensure the row and column in content_frame can expand to fill the space
+    content_frame.grid_rowconfigure(1, weight=1)
+    content_frame.columnfigure(0, weight=1)
         
 # Earnings Button
 def earningsButton_clicked():
@@ -210,7 +241,6 @@ def transactionsButton_clicked():
 
 # Utilities
 def utilitiesButton_clicked():
-        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
@@ -410,11 +440,10 @@ def homeButton_click(): # this button will switch from manager to employee view 
         
 
         for widget in content_frame.winfo_children():
-             widget.destroy()
+            widget.destroy()
 
         content_frame1 = customtkinter.CTkFrame(employeeUI,width=1350,height=600, fg_color="#97B9E0") 
         content_frame1.grid(row=1, column=1, columnspan=8, sticky="nswe")
-      
 
         order_display = customtkinter.CTkLabel(content_frame1, text="Current Order:", font=("Hanuman", 15), text_color="black")
         order_display.grid(row=5, column=3)
@@ -497,7 +526,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
         mocktailPic_button.grid(row=3, column=5)
         mocktailPicDescription = customtkinter.CTkLabel(content_frame1, text="Mocktail",font=(Hanuman,15), text_color="black")
         mocktailPicDescription.grid(row=4, column=5)
-       
+
         waterPic_button = customtkinter.CTkButton(content_frame1, image=waterPic, text="", width=100, height=80,command=lambda: food_button_clicked(menu_items[8],content_frame1, order_display, TableDropBox))
         waterPic_button.grid(row=3, column=6)
         waterPicDescription = customtkinter.CTkLabel(content_frame1, text="Water",font=(Hanuman,15), text_color="black")
@@ -584,17 +613,17 @@ def homeButton_click(): # this button will switch from manager to employee view 
             if table == "Select a Table":
                 break
             else:
-             table_label = customtkinter.CTkLabel(content_frame, text=f"Table {table} Order", font=(Hanuman,20), text_color="black")
-             table_label.grid(row=row, column = 0, padx = 10,pady=10, sticky="w")
+                table_label = customtkinter.CTkLabel(content_frame, text=f"Table {table} Order", font=(Hanuman,20), text_color="black")
+                table_label.grid(row=row, column = 0, padx = 10,pady=10, sticky="w")
 
 
-             order_display = customtkinter.CTkLabel(content_frame, text=order, font=(Hanuman,15),text_color="black")
-             order_display.grid(row=row, column=1, padx=10, pady=10, sticky="w")
-             row += 1 
+                order_display = customtkinter.CTkLabel(content_frame, text=order, font=(Hanuman,15),text_color="black")
+                order_display.grid(row=row, column=1, padx=10, pady=10, sticky="w")
+                row += 1 
         for i in range(row):
-             content_frame.grid_rowconfigure(i, weight=1)
+                content_frame.grid_rowconfigure(i, weight=1)
         for i in range(2):
-             content_frame.grid_columnconfigure(i, weight=1)
+                content_frame.grid_columnconfigure(i, weight=1)
     
         # Ensure the row and column in content_frame can expand to fill the space
         content_frame.grid_rowconfigure(0, weight=1)
