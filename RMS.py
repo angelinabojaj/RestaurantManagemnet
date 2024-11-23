@@ -290,7 +290,7 @@ def utilitiesButton_clicked():
 # Contact Inventory Supplier Button Function
 def contactInventory_clicked():
     print("Clicked Contact Inventory Supplier")
-    Email_Inventory_Supplier.sendEmail() # Email sent from theanythingconeyisland@gmail.com to inventorysupplierou@gmail.com
+    Email_Inventory_Supplier.contactInventory() # Email sent from theanythingconeyisland@gmail.com to inventorysupplierou@gmail.com
 
 def placeOrder_clicked():
     print("Clicked Place Order")
@@ -419,7 +419,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
         print(f'Selected table: {selection}')
     
     # Look Up Button
-        def lookUpButton_clicked():
+    def lookUpButton_clicked():
             content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
             content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
@@ -429,6 +429,41 @@ def homeButton_click(): # this button will switch from manager to employee view 
             # Ensure the row and column in content_frame can expand to fill the space
             content_frame.grid_rowconfigure(0, weight=1)
             content_frame.grid_columnconfigure(0, weight=1)
+            
+    def send_order_to_kitchen(content_frame, order_display,table_dropdown):
+                selected_table = table_dropdown.get()  # Get the selected table from the dropdown
+
+            # If no valid table is selected (i.e., "Select a Table"), do nothing
+                if selected_table == "Select a Table":
+                    for item in order_counts:
+                        order_counts[item] = 0
+                    table_orders[selected_table] = ""
+                    return  # Exit early, do nothing
+                else:
+                    print(f"Order sent to kitchen for table {selected_table}")
+                    print(f"Order details:\n{table_orders[selected_table]}")
+
+            # Reset all order counts to zero
+                    for item in order_counts:
+                        order_counts[item] = 0
+            
+            # Clear the order for the selected table
+                    table_orders[selected_table] = ""
+
+            # Update the order display to reflect the cleared order
+                    update_order_display(content_frame, order_display, table_dropdown)
+
+            # Optional: Display confirmation message
+                    success_label = customtkinter.CTkLabel(
+                        content_frame,
+                        text=f"Order for table {selected_table} sent to kitchen successfully!",
+                        font=("Hanuman", 15),
+                        text_color="green",
+                    )
+                    success_label.grid(row=6, column=0, columnspan=3, padx=10, pady=10)
+
+            # Reset the order display label text
+                    order_display.configure(text="Current Order:\n")  # Reset the display to indicate no order is active
                 
     
     
