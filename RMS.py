@@ -71,9 +71,6 @@ notificationsLabel = customtkinter.CTkLabel(content_frame, text="Notification Ma
 notificationsLabel.grid(row = 1, column = 0, rowspan = 4,  padx = 20, pady = 20)
 
 # Manager Button Definitions
-# Button For Manager Switch -> Employee
-switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="DOESNT WORK: Employee View", width=100, height= 60)
-switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
 
 # Schedule Button & Its Corresponding Buttons
 def scheduleButton_clicked():
@@ -495,6 +492,9 @@ def homeButton_click(): # this button will switch from manager to employee view 
         specialsTitle_label = customtkinter.CTkLabel(content_frame1, text="Place Order", font=(Hanuman, 30), text_color="black")
         specialsTitle_label.grid(row=0, column=3)  # Center the label within the frame
 
+        quantities_button = customtkinter.CTkButton(content_frame1, text='Check Quantities', font=('Hanuman', 20), command=quantities_clicked)
+        quantities_button.grid(row=0, column=6, padx=20, sticky='e')
+        
         order_display = customtkinter.CTkLabel(content_frame1,text= "Current Order:\n", font=(Hanuman,15), text_color="black")
         order_display.grid(row=5, column=3)
 
@@ -575,7 +575,6 @@ def homeButton_click(): # this button will switch from manager to employee view 
 
 
     def menuButton_clicked():
-
 
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E1") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
@@ -671,13 +670,72 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nsew")
 
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Table Management", font=(Hanuman, 60), text_color="black")
-        LookUp_label.grid(row=1, column=1, padx=20, pady=20,  sticky="n")
+        tableMap = customtkinter.CTkImage(light_image=Image.open('table-map.png'), size=(782, 506))
+        tableMap_label = customtkinter.CTkLabel(content_frame, image=tableMap, text="")
+        tableMap_label.grid(row=2, column=0, sticky='nsew')
 
         yourTables_label = customtkinter.CTkLabel(content_frame, text="Your Tables:\n1 2 3", font=(customFont), text_color="black")
-        yourTables_label.grid(row=3, column=0, padx=20, pady=20, sticky="nsew")
+        yourTables_label.grid(row=3, column=0, padx=20, pady=20, sticky="s")
+
+        capacity_button = customtkinter.CTkButton(content_frame, text="Check Capacity", width=100, height=60, command=capacity_clicked)
+        capacity_button.grid(row=3, column=0, padx=20, sticky='w')
     
         # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+        
+    # Capacity Button, found on Table Management Page
+    def capacity_clicked():
+        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nsew")
+
+        capacityTitle_label = customtkinter.CTkLabel(content_frame, text="Restaurant Capacity", font=(Hanuman, 60), text_color="black")
+        capacityTitle_label.grid(row=0, column=0, padx=20, pady=30,  sticky="n")
+
+        table = ttk.Treeview(content_frame, columns=("Table #", "Guests"), show="headings", height=8)
+        table.heading("Table #", text="Table #")
+        table.heading("Guests", text="Guests")
+        table.column("Table #", width=300, anchor="center")
+        table.column("Guests", width=300, anchor="center")
+
+        style = ttk.Style()
+        style.configure("Treeview", rowheight=40, font=("Hanuman", 20))  # Change font for table content
+        style.configure("Treeview.Heading", font=("Hanuman", 30, "bold"))
+
+        data = [
+            (1, 4),
+            (2, 2),
+            (3, 4),
+            (4, 3),
+            (5, 2),
+            (6, 0),
+            (7, 0),
+            (8, 0)
+        ]
+
+        for row in data:
+            table.insert("", "end", values=row)
+
+        table.grid(row=1, column=0)
+
+        capacity_label = customtkinter.CTkLabel(content_frame, text="Customers: 15/32\nEmployees: 5/10\nTotal Occupants: 20/42", font=('Hanuman', 30), text_color="black")
+        capacity_label.grid(row=3, column=0, padx=20, pady=20, sticky="s")
+
+        # Ensure the row and column in content_frame can expand to fill the space
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+        
+    # Quantities Button
+    def quantities_clicked():
+        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nsew")
+
+        quantities_label = customtkinter.CTkLabel(content_frame, text="Be Aware", font=("Hanuman", 60), text_color="black")
+        quantities_label.grid(row=0, column=0, padx=20, pady=20,  sticky="nsew")
+
+        itemQuantities_label = customtkinter.CTkLabel(content_frame, font=("Hanuman", 25), text="We are low on:\nLemonade (3 portions left)\nChicken Fingers (2 portions left)\nCevapi (1 portion left)")
+        itemQuantities_label.grid(row=1, column=0, pady=200, sticky='nsew')
+
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
     
@@ -686,9 +744,9 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        specialsTitle_label = customtkinter.CTkLabel(content_frame, text="Specials", font=(Hanuman, 80), text_color="black",underline= True)
+        specialsTitle_label = customtkinter.CTkLabel(content_frame, text="Specials", font=(Hanuman, 80), text_color="black")
         specialsTitle_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
-
+        
         specials_label = customtkinter.CTkLabel(content_frame, text="Monday:\n $1 Koney Dogs\n Tuesday\n$1 Chicken Lemon Rice Soup\nWednesday\n Free Side of chili cheese fries with every meal\nThursday\n Free desert of your choice after spending $40\nFriday\n $3 Gyros(chicken or Lamb)", font=(customFont), text_color="black")
         specials_label.grid(row=1, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
     
@@ -696,7 +754,23 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
 
-    switchToManager_Button = customtkinter.CTkButton(top_frame, text="NO WORK: MAN View", width=100, height= 60)
+    def managerCode():
+        content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+        code_label = customtkinter.CTkLabel(content_frame, text="Enter passcode:", font=(Hanuman, 50), text_color="black")
+        code_label.grid(row=0, column=0, padx=20, pady=20, sticky="n")
+
+        password_field = customtkinter.CTkEntry(content_frame, placeholder_text="Manager ID Login", show="*", width=200, font=("Hanuman", 14))
+        password_field.grid(row=0, column=0)
+
+        submit_Button = customtkinter.CTkButton(content_frame, text="Submit", width=200, height=50)
+        submit_Button.grid(row=1, column=0, pady=20, sticky='s')
+
+        content_frame.grid_rowconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(0, weight=1)
+        
+    switchToManager_Button = customtkinter.CTkButton(top_frame, text="Manager\nView", width=100, height= 60, command=managerCode)
     switchToManager_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
 
 # Employee Buttons Defined
@@ -729,15 +803,17 @@ def homeButton_click(): # this button will switch from manager to employee view 
 
 # Manager Buttons
     # Command Already Added
-# Manager Buttons
-    # Command Already Added
 logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100)
-homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100,command= homeButton_click)
+homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100)
 scheduleButton = customtkinter.CTkButton(left_frame, text="Schedule", width=200, height=100, command = scheduleButton_clicked)
 earningsButton = customtkinter.CTkButton(left_frame, text="Earnings", width=200, height=100, command = earningsButton_clicked)
 transactionButton = customtkinter.CTkButton(left_frame, text="Transaction", width=200, height=100, command = transactionsButton_clicked)
 utilitiesButton = customtkinter.CTkButton(left_frame, text="Utilities", width=200, height=100, command = utilitiesButton_clicked)
 TimeClockButton = customtkinter.CTkButton(left_frame, text="TimeClock", width=200, height=100, command = timeClockButton_clciked)
+
+# Button For Manager Switch -> Employee on manager screen
+switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="Switch\nView", width=100, height= 60, command=homeButton_click)
+switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, padx=15)
 
 for i in range(8): 
     left_frame.grid_rowconfigure(i, weight=1) 
