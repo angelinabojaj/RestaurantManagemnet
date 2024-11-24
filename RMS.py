@@ -1,3 +1,4 @@
+from datetime import datetime
 from tkinter import *
 from tkinter import ttk
 import customtkinter
@@ -66,11 +67,89 @@ left_frame.grid(row=0, column=0, rowspan=8, sticky="nsw")
 content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0")
 content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-# Making Notifications Layout For Rita
+# Making Notifications Layout
 notificationsLabel = customtkinter.CTkLabel(content_frame, text="Notification Manager", text_color="black", font=("Hanuman", 40)) 
 notificationsLabel.grid(row = 1, column = 0, rowspan = 4,  padx = 20, pady = 20)
 
-# Manager Button Definitions
+def show_option(event, menu):
+    x = event.x_root
+    y = event.y_root
+    menu.post(x, y)
+
+def read_notif():
+    print("Read notification")
+    
+def reply_notif():
+    print("Reply to notification")
+    
+def delete_notif():
+    print("Delete notification")
+    
+font_time = ("Times New Roman", 14)
+font_message = ("Times New Roman", 16)
+font_title = ("Times New Roman", 20)
+font_button = ("Times New Roman", 14)
+
+
+content_frame.grid_rowconfigure(0, weight = 1)
+content_frame.grid_rowconfigure(1, weight = 1)
+content_frame.grid_columnconfigure(0, weight = 1)
+
+# create the first notification frame
+notif_frame = Frame(content_frame, bg="white", width=350, height=200, bd=1, relief="solid")
+#notif_frame.pack_propagate(False)
+notif_frame.grid(row=0, column=0, padx=25, pady=25, sticky="nsew")
+
+notif_time = Label(notif_frame, text="5 days ago", anchor="e", bg="white", fg="black", font=font_time)
+notif_time.grid(row=0, column=7, padx = 15, pady = 5, sticky="ne")
+
+notif_title = Label(notif_frame, text="New Schedule Update", anchor="w", bg="white", fg="black", font=font_title)
+notif_title.grid(row=0, column=1, padx = 15, pady = 5, sticky="nw")
+
+notif_message = Label(
+    notif_frame, 
+    text="Employee Azra Ferris has requested time off on Nov. 16-20. Please review and approve or deny.", 
+    wraplength=500, bg="white", fg="black", font=font_message, anchor = "center")
+
+notif_message.grid(row=1, column=3, columnspan=2, sticky="nsew")
+
+option_button = Button(notif_frame, text=":", bg="white", font=font_button)
+option_button.grid(row=5, column=0, pady=10, sticky="w")
+
+menu = Menu(managementUI, tearoff=0)
+menu.add_command(label="Read", command=read_notif)
+menu.add_command(label="Reply", command=reply_notif)
+menu.add_command(label="Delete", command=delete_notif)
+
+option_button.bind("<Button-1>", lambda event: show_option(event, menu))
+
+# create the second notification frame
+notif_frame1 = Frame(content_frame, bg="white", width=350, height=200, bd=1, relief="solid")
+#notif_frame1.pack_propagate(False)
+notif_frame1.grid(row=1, column= 0, padx=25, pady=120, sticky="nsew")
+
+notif_time1 = Label(notif_frame1, text="11:52 AM", anchor="e", bg="white", fg="black", font=font_time)
+notif_time1.grid(row=0, column=7, sticky="ne")
+
+notif_title1 = Label(notif_frame1, text="Shift Swap", anchor="w", bg="white", fg="black", font=font_title)
+notif_title1.grid(row=0, column=1, sticky="nw")
+
+notif_message1 = Label(
+    notif_frame1, 
+    text="Employee Navy Arbor has a shift scheduled for tomorrow at 4. Please send a reminder to ensure they’re aware of their start time.", 
+    wraplength=500, bg="white", fg="black", font=font_message, anchor = "center")
+notif_message1.grid(row=1, column=3, columnspan=2, sticky="nsew")
+
+option_button1 = Button(notif_frame1, text=":", bg="white", font=font_button)
+option_button1.grid(row=2, column=0, pady=20, sticky="w")
+
+menu1 = Menu(managementUI, tearoff=0)
+menu1.add_command(label="Read", command=read_notif)
+menu1.add_command(label="Reply", command=reply_notif)
+menu1.add_command(label="Delete", command=delete_notif)
+
+option_button1.bind("<Button-1>", lambda event: show_option(event, menu1))
+
 
 # Schedule Button & Its Corresponding Buttons
 def scheduleButton_clicked():
@@ -294,18 +373,67 @@ def placeOrder_clicked():
     Email_Inventory_Supplier.placeOrderRestock()
 
 # Time Clock
-def timeClockButton_clciked():
-        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
-        Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
-        content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
-        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Time Clock", font=(Hanuman, 80), text_color="black",underline= False)
-        LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
-    
-        # Ensure the row and column in content_frame can expand to fill the space
-        content_frame.grid_rowconfigure(0, weight=1)
+# Persistent Clocked_in State
+Clocked_in = False  # Global variable to persist clock-in state
+
+def timeClockButton_clicked():
+        global Clocked_in  # Access the global variable
+        
+        # Fonts and Frame Setup
+        Hanuman = customtkinter.CTkFont(family="hanuman", size=40, slant="italic")
+        content_frame = customtkinter.CTkFrame(managementUI, width=1350, fg_color="#97B9E0")
+        content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+        
+        # Title Label
+        TimeClock_label = customtkinter.CTkLabel(content_frame, text="Time Clock", font=Hanuman, text_color="black")
+        TimeClock_label.grid(row=0, column=0, padx=20, pady=20, sticky="nw")
+        
+        # Ensure content_frame can expand
+        content_frame.grid_rowconfigure(0, weight=0)
+        content_frame.grid_rowconfigure(1, weight=0)
+        content_frame.grid_rowconfigure(2, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
+        content_frame.grid_columnconfigure(1, weight=1)
+        
+        def clock_in_out():
+            global Clocked_in
+            employee_ID = employeeID_TextBox.get()
+            
+            # Get Current Time
+            now = datetime.now()
+            current_Time = now.strftime('%Y-%m-%d %H:%M:%S')
+            
+            
+            # Logic for handling employee clock-in/out
+            if employee_ID:
+                if Clocked_in:
+                    employeeID_Status_Label.configure(
+                        text=f"Employee with ID {employee_ID} clocked out at {current_Time}. You are clocked out."
+                    )
+                    Clocked_in = False
+                else:
+                    employeeID_Status_Label.configure(
+                        text=f"Employee with ID {employee_ID} clocked in at {current_Time}. You are clocked in."
+                    )
+                    Clocked_in = True
+            else:
+                employeeID_Status_Label.configure(text="Invalid Employee ID. Please try again.")
+
+        currentTime_label = customtkinter.CTkLabel(content_frame, text = "Current Time: ", font=("Times New Roman", 18))
+        currentTime_label.grid(row = 1, column = 0, padx = 10, pady = 10, sticky = "w")
+        
+        employeeID_label = customtkinter.CTkLabel(content_frame, text = "Employee ID: ", font=("Times New Roman", 18))
+        employeeID_label.grid(row = 2, column = 0, padx = 10, pady = 10, sticky = "w")
+        
+        employeeID_TextBox = customtkinter.CTkEntry(content_frame, width = 350, font = ("Times New Roman", 18))
+        employeeID_TextBox.grid(row = 2, column = 1, padx = 10, pady = 10, sticky = "w")
+        
+        confirm_Button = customtkinter.CTkButton(content_frame, text="Confirm", width=100, height= 60, command = clock_in_out)
+        confirm_Button.grid(row = 2, column = 1, padx = 10, pady = 10, sticky = "e")
+        
+        employeeID_Status_Label = customtkinter.CTkLabel(content_frame, text = "", font=("Times New Roman", 18))
+        employeeID_Status_Label.grid(row = 23, column = 1, padx = 10, pady = 10, sticky = "s")
 
 # Button For Manager Switch -> Employee
 switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="NO WORK: Employ View", width=100, height= 60)
@@ -809,7 +937,7 @@ scheduleButton = customtkinter.CTkButton(left_frame, text="Schedule", width=200,
 earningsButton = customtkinter.CTkButton(left_frame, text="Earnings", width=200, height=100, command = earningsButton_clicked)
 transactionButton = customtkinter.CTkButton(left_frame, text="Transaction", width=200, height=100, command = transactionsButton_clicked)
 utilitiesButton = customtkinter.CTkButton(left_frame, text="Utilities", width=200, height=100, command = utilitiesButton_clicked)
-TimeClockButton = customtkinter.CTkButton(left_frame, text="TimeClock", width=200, height=100, command = timeClockButton_clciked)
+TimeClockButton = customtkinter.CTkButton(left_frame, text="TimeClock", width=200, height=100, command = timeClockButton_clicked)
 
 # Button For Manager Switch -> Employee on manager screen
 switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="Switch\nView", width=100, height= 60, command=homeButton_click)
