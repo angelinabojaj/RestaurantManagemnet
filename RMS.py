@@ -670,7 +670,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nsew")
 
-        tableMap = customtkinter.CTkImage(light_image=Image.open('table-map.png'), size=(782, 506))
+        tableMap = customtkinter.CTkImage(light_image=Image.open('RMS_Database_Pictures/table-map.png'), size=(782, 506))
         tableMap_label = customtkinter.CTkLabel(content_frame, image=tableMap, text="")
         tableMap_label.grid(row=2, column=0, sticky='nsew')
 
