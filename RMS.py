@@ -277,7 +277,7 @@ def utilitiesButton_clicked():
         inventoryButtons_frame.grid(row = 2, column = 0, padx = 20, pady = 20, columnspan = 2, sticky="ew")
         
         contactSupplier_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Contact Inventory Supplier", command = contactInventory_clicked)
-        placeOrder_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Place Order Restock")
+        placeOrder_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Place Order Restock", command = placeOrder_clicked)
         
         contactSupplier_button.grid(row = 0, column = 0, padx = 15, pady= 15)
         placeOrder_button.grid(row = 0, column = 1, padx = 15, pady = 15)
@@ -294,6 +294,7 @@ def contactInventory_clicked():
 
 def placeOrder_clicked():
     print("Clicked Place Order")
+    Email_Inventory_Supplier.placeOrderRestock()
 
 # Time Clock
 def timeClockButton_clciked():

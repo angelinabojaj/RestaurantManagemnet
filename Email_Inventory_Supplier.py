@@ -19,6 +19,8 @@ def contactInventory():
     server.sendmail(email, receiverEmail, text)
     
     print("Email Sent")
+    
+    server.quit()
 
 def placeOrderRestock():
     connection = SQLConnection
@@ -28,7 +30,7 @@ def placeOrderRestock():
     try:
         mycursor = SQLConnection.connection.cursor()
         mycursor.execute(outOfStock_Query)
-        items_Result = mycursor.SQLConnection.fetch_all()
+        items_Result = SQLConnection.fetch_all(outOfStock_Query)
         
         outOfStock_Items = [row[0] for row in items_Result]
         
@@ -38,15 +40,15 @@ def placeOrderRestock():
                 receiverEmail = "inventorysupplierou@gmail.com"
 
                 subjectEmail = "Fufillment Needed"
-                messageEmail = "Dear Inventory Supplier,\nThe Anything Conney Island needs a restock done please.\n\nSincerely,\n\nThe Anything Coney Island\ntheanythingconeyisland@gmail.com"
+                messageEmail = "Dear Inventory Supplier,\n\nThe Anything Conney Island needs a restock done on the following:\n\n" f"{'. '.join(outOfStock_Items)}\n\nSincerely,\n\nThe Anything Coney Island\ntheanythingconeyisland@gmail.com"
 
                 text = f"Subject: {subjectEmail}\n\n{messageEmail}"
                 server = smtplib.SMTP("smtp.gmail.com", 587)
                 server.starttls()
-    
                 server.login(email, emailPassword)
-    
                 server.sendmail(email, receiverEmail, text)
+                print("Email Sent!")
+                server.quit()
         
     except:
         print(f"Database error: {ImportError}")
