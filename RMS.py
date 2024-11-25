@@ -1019,6 +1019,9 @@ def homeButton_click(): # this button will switch from manager to employee view 
 
         content_frame.grid_rowconfigure(0, weight=1)
         content_frame.grid_columnconfigure(0, weight=1)
+        
+        backButton = customtkinter.CTkButton(content_frame, text = "<--", width = 100, height = 50,command = startOrder_clicked)
+        backButton.grid(row=0, column=0, padx=10, pady=20, sticky="nw")  # Center the label within the frame
     
     # Specials Button
     def specialsButton_clicked(): #Specials interface
