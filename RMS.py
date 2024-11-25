@@ -295,17 +295,19 @@ def scheduleButton_clicked():
     
         scheduele = SQLConnection.fetch_all("SELECT * FROM scheduele")
         
-        schedueleTable = ttk.Treeview(content_frame, columns=("Employee ID Number", "Employee Name","Shift Type", "Shift Time"), show = "headings")
+        schedueleTable = ttk.Treeview(content_frame, columns=("Employee ID Number", "Employee Name","Shift Type", "Shift Time Start", "Shift Time End"), show = "headings")
         
         schedueleTable.heading("Employee ID Number", text = "Employee ID Number")
         schedueleTable.heading("Employee Name", text = "Employee Name")
         schedueleTable.heading("Shift Type", text = "Shift Time")
-        schedueleTable.heading("Shift Time", text = "Shift Time")
+        schedueleTable.heading("Shift Time Start", text = "Shift Time Start")
+        schedueleTable.heading("Shift Time End", text = "Shift Time End")
         
         schedueleTable.column("Employee ID Number", anchor="center", width=60)
         schedueleTable.column("Employee Name", anchor="center", width=60)
         schedueleTable.column("Shift Type", anchor="center", width=60)
-        schedueleTable.column("Shift Time", anchor="center", width=60)
+        schedueleTable.column("Shift Time Start", anchor="center", width=40)
+        schedueleTable.column("Shift Time End", anchor="center", width=40)
         
         for item in scheduele:
             schedueleTable.insert("", "end", values=item)
@@ -320,9 +322,9 @@ def scheduleButton_clicked():
         inventoryButtons_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
         inventoryButtons_frame.grid(row = 3, column = 0, padx = 20, pady = 20, columnspan = 2, sticky="ew")
         
-        makeChanges_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Make Scheduele Changes", command = makeScheduele_clicked)
-        shiftDuties_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Shift Duties Checklist", command = shiftDuties_clicked)
-        viewEmployeePerformance_button = customtkinter.CTkButton(inventoryButtons_frame, text = "View Employee Performance", command = viewEmployeePerformance_clicked)
+        makeChanges_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Make Scheduele Changes", width = 80, height = 60, command = makeScheduele_clicked)
+        shiftDuties_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Shift Duties Checklist", width = 80, height = 60, command = shiftDuties_clicked)
+        viewEmployeePerformance_button = customtkinter.CTkButton(inventoryButtons_frame, text = "View Employee Performance", width = 80, height = 60, command = viewEmployeePerformance_clicked)
         
         makeChanges_button.grid(row = 0, column = 0, padx = 15, pady= 15)
         shiftDuties_button.grid(row = 0, column = 1, padx = 15, pady = 15)
@@ -606,14 +608,12 @@ def homeButton_click(): # this button will switch from manager to employee view 
 
     employeeUI.grid_rowconfigure(0, weight=0)
     employeeUI.grid_rowconfigure(1, weight=1)
-    employeeUI.grid_columnconfigure(0, weight=1)
+    employeeUI.grid_columnconfigure(0, weight=0)
+    employeeUI.grid_columnconfigure(1, weight = 1)
 
     # Create a top frame across the screen width 
     top_frame = customtkinter.CTkFrame(employeeUI, width=screen_width, height=150, fg_color="#525fc7") 
     top_frame.grid(row=0, column=0, columnspan=2, sticky="ew")
-
-    employeeUI.grid_columnconfigure(0, weight=1)
-    employeeUI.grid_columnconfigure(1,weight=1)
 
     top_label = customtkinter.CTkLabel(top_frame, text="The Anything Coney Island", text_color="black", font=(Hanuman, 78)) 
     top_label.grid(row=0, column=2, pady=35, padx=180) #the pady and padx controls the height of the top rectangle box
@@ -626,10 +626,13 @@ def homeButton_click(): # this button will switch from manager to employee view 
 
     # Create a main content frame for dynamic content 
     content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
-    content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+    content_frame.grid(row=1, column = 1, columnspan=8, sticky="nswe") # ISSUE AREA
     
-    #requestTimeOff_label = customtkinter.CTkLabel(content_frame, text="Request Time Off", font=(Hanuman, 40), text_color="black")
-    #requestTimeOff_label.grid(row=0, column=1, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+    requestChange_Label = customtkinter.CTkLabel(content_frame, text="Employee: Request Change", text_color="black", font=(Hanuman, 40)) 
+    requestChange_Label.grid(row=0, column=0, pady = 20, padx = 10, sticky = "nw")
+    
+    requestChange_Button = customtkinter.CTkButton(content_frame,text="Request Change",font=(Hanuman,25),command= Email_Inventory_Supplier.requestTimeOff_Button)
+    requestChange_Button.grid(row=1, column=0, pady = 20, padx = 10, sticky = "nw")
 
     # Ensure the row and column in content_frame can expand to fill the space
     content_frame.grid_rowconfigure(1, weight=1)
@@ -743,7 +746,6 @@ def homeButton_click(): # this button will switch from manager to employee view 
     
     # Start Order Button
     def startOrder_clicked():
-
         employeeUI.grid_rowconfigure(1,weight=1)
         employeeUI.grid_columnconfigure(1,weight=1)
         
