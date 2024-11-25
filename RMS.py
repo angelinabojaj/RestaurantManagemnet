@@ -1,6 +1,7 @@
 from datetime import datetime
 from tkinter import *
 from tkinter import ttk
+import webbrowser
 import customtkinter
 from PIL import Image
 import SQLConnection
@@ -150,6 +151,129 @@ menu1.add_command(label="Delete", command=delete_notif)
 
 option_button1.bind("<Button-1>", lambda event: show_option(event, menu1))
 
+# Default Home
+
+def homeManager_clicked():
+    managementUI = customtkinter.CTk()
+
+    screen_width = managementUI.winfo_screenwidth()
+    screen_height = managementUI.winfo_screenheight()
+
+    managementUI.title("Restaurant Management Solutions")
+    managementUI.geometry(f"{screen_width}x{screen_height - 100}+0+0")
+
+    # background_frame = customtkinter.CTkFrame(managementUI, width=screen_width, height=screen_height, fg_color="black") 
+    # background_frame.grid(row=0,column=0, rowspan=9, columnspan=2, sticky='nswe')
+
+    # Set dimensions for the "rectangle"
+    rect_width = 225
+    rect_height = screen_height 
+
+    managementUI.grid_rowconfigure(0, weight=0)
+    managementUI.grid_rowconfigure(1, weight=1)
+    managementUI.grid_columnconfigure(0, weight=0)
+    managementUI.grid_columnconfigure(1, weight=1)
+
+    # Create a top frame across the screen width 
+    top_frame = customtkinter.CTkFrame(managementUI, width=screen_width, height=150, fg_color="#525fc7") 
+    top_frame.grid(row=0, column=0, columnspan=2, sticky="ew")
+
+    top_label = customtkinter.CTkLabel(top_frame, text="        The Anything Coney Island", text_color="black", font=("Hanuman", 78)) 
+    top_label.grid(row=0, column=2, pady=55, padx=180) #the pady and padx controls the height of the top rectangle box
+
+    top_frame.grid_rowconfigure(0,weight=1)
+    top_frame.grid_columnconfigure(0,weight=1)
+
+    # Create a frame to act as the rectangle (background for buttons)
+    left_frame = customtkinter.CTkFrame(managementUI, width=rect_width, height=rect_height, fg_color="#525fc7")
+    left_frame.grid(row=0, column=0, rowspan=8, sticky="nsw")
+
+    # Create a main content frame for dynamic content 
+    content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0")
+    content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+
+    # Making Notifications Layout
+    notificationsLabel = customtkinter.CTkLabel(content_frame, text="Notification Manager", text_color="black", font=("Hanuman", 40)) 
+    notificationsLabel.grid(row = 1, column = 0, rowspan = 4,  padx = 20, pady = 20)
+
+    def show_option(event, menu):
+        x = event.x_root
+        y = event.y_root
+        menu.post(x, y)
+
+    def read_notif():
+        print("Read notification")
+        
+    def reply_notif():
+        print("Reply to notification")
+        
+    def delete_notif():
+        print("Delete notification")
+        
+    font_time = ("Times New Roman", 14)
+    font_message = ("Times New Roman", 16)
+    font_title = ("Times New Roman", 20)
+    font_button = ("Times New Roman", 14)
+
+
+    content_frame.grid_rowconfigure(0, weight = 1)
+    content_frame.grid_rowconfigure(1, weight = 1)
+    content_frame.grid_columnconfigure(0, weight = 1)
+
+    # create the first notification frame
+    notif_frame = Frame(content_frame, bg="white", width=350, height=200, bd=1, relief="solid")
+    #notif_frame.pack_propagate(False)
+    notif_frame.grid(row=0, column=0, padx=25, pady=25, sticky="nsew")
+
+    notif_time = Label(notif_frame, text="5 days ago", anchor="e", bg="white", fg="black", font=font_time)
+    notif_time.grid(row=0, column=7, padx = 15, pady = 5, sticky="ne")
+
+    notif_title = Label(notif_frame, text="New Schedule Update", anchor="w", bg="white", fg="black", font=font_title)
+    notif_title.grid(row=0, column=1, padx = 15, pady = 5, sticky="nw")
+
+    notif_message = Label(
+        notif_frame, 
+        text="Employee Azra Ferris has requested time off on Nov. 16-20. Please review and approve or deny.", 
+        wraplength=500, bg="white", fg="black", font=font_message, anchor = "center")
+
+    notif_message.grid(row=1, column=3, columnspan=2, sticky="nsew")
+
+    option_button = Button(notif_frame, text=":", bg="white", font=font_button)
+    option_button.grid(row=5, column=0, pady=10, sticky="w")
+
+    menu = Menu(managementUI, tearoff=0)
+    menu.add_command(label="Read", command=read_notif)
+    menu.add_command(label="Reply", command=reply_notif)
+    menu.add_command(label="Delete", command=delete_notif)
+
+    option_button.bind("<Button-1>", lambda event: show_option(event, menu))
+
+    # create the second notification frame
+    notif_frame1 = Frame(content_frame, bg="white", width=350, height=200, bd=1, relief="solid")
+    #notif_frame1.pack_propagate(False)
+    notif_frame1.grid(row=1, column= 0, padx=25, pady=120, sticky="nsew")
+
+    notif_time1 = Label(notif_frame1, text="11:52 AM", anchor="e", bg="white", fg="black", font=font_time)
+    notif_time1.grid(row=0, column=7, sticky="ne")
+
+    notif_title1 = Label(notif_frame1, text="Shift Swap", anchor="w", bg="white", fg="black", font=font_title)
+    notif_title1.grid(row=0, column=1, sticky="nw")
+
+    notif_message1 = Label(
+        notif_frame1, 
+        text="Employee Navy Arbor has a shift scheduled for tomorrow at 4. Please send a reminder to ensure they’re aware of their start time.", 
+        wraplength=500, bg="white", fg="black", font=font_message, anchor = "center")
+    notif_message1.grid(row=1, column=3, columnspan=2, sticky="nsew")
+
+    option_button1 = Button(notif_frame1, text=":", bg="white", font=font_button)
+    option_button1.grid(row=2, column=0, pady=20, sticky="w")
+
+    menu1 = Menu(managementUI, tearoff=0)
+    menu1.add_command(label="Read", command=read_notif)
+    menu1.add_command(label="Reply", command=reply_notif)
+    menu1.add_command(label="Delete", command=delete_notif)
+
+    option_button1.bind("<Button-1>", lambda event: show_option(event, menu1))
 
 # Schedule Button & Its Corresponding Buttons
 def scheduleButton_clicked():
@@ -164,8 +288,12 @@ def scheduleButton_clicked():
         schedueleTitle_description = customtkinter.CTkLabel(content_frame, text="Shifts are created on Google Calendars and imported into the table. Time off requests are made to be sent to the manager via email.", width = 150, font=(Hanuman, 18), text_color="black", anchor = "w", justify = "left")
         schedueleTitle_description.grid(row=1, column=0, padx=20, pady=20, sticky="nw")
     
+        style = ttk.Style()
+        style.configure("Treeview", rowheight = 50, font=("Helvetica", 16))
+        
+        style.configure("Treeview.Heading", font =("Helvetica", 18, "bold"))
+    
         scheduele = SQLConnection.fetch_all("SELECT * FROM scheduele")
-        print(scheduele)
         
         schedueleTable = ttk.Treeview(content_frame, columns=("Employee ID Number", "Employee Name","Shift Type", "Shift Time"), show = "headings")
         
@@ -211,47 +339,52 @@ def scheduleButton_clicked():
 # Make Scheduele Changes Button
 def makeScheduele_clicked():
     print("Clicked Make Scheduele")
+    
+    google_calendar = "https://calendar.google.com/calendar/u/4/r?pli=1"
+    webbrowser.open(google_calendar)
 
 # Shift Duties Button
 def shiftDuties_clicked():
-    print("Clicked Shift Duties")
+    print("Clicked Shuft Duties")
     
     Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
     content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
     content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-    shiftDuties_label = customtkinter.CTkLabel(content_frame, text="Shift Duties Checklist (By Shift Type)", font=(Hanuman, 40), text_color="black")
-    shiftDuties_label.grid(row=0, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+    shiftDuties_label = customtkinter.CTkLabel(content_frame, text="Shift Duties Checklist", font = Hanuman, text_color="black")
+    shiftDuties_label.grid(row=0, column=0, padx=10, pady=20, sticky="nsew") 
     
-    shiftDuties_description = customtkinter.CTkLabel(content_frame, text="Each shift is divided by the location. On floor duties refer to those directly interacting with customers on the restaurant floor. Off floor duties refer to those working in the back of the restaurant who dont directly interact with customers. These series of checklists are used by your managers to help train new staff into their positions by their shift.", font=(Hanuman, 20), text_color="black")
-    shiftDuties_description.grid(row=1, column=0, padx=20, pady=20, sticky="n")  # Center the label within the frame
+    backButton = customtkinter.CTkButton(content_frame, text = "<--", width = 100, height = 50, command = scheduleButton_clicked)
+    backButton.grid(row=0, column=0, padx=10, pady=20, sticky="nw")  # Center the label within the frame
     
-    shiftDuties_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
-    shiftDuties_frame.grid(row = 2, column = 0, padx = 20, pady = 20, rowspan = 4, columnspan = 2, sticky="ew")
+    style = ttk.Style()
+    style.configure("Treeview", rowheight = 50, font=("Helvetica", 16))
+    
+    style.configure("Treeview.Heading", font =("Helvetica", 18, "bold"))
+    
+    shiftDuties = SQLConnection.fetch_all("SELECT shift, shiftDescription FROM shift_duties")
+
+    shiftDutiesTable = ttk.Treeview(content_frame, columns=("Shift", "Shift Description"), show = "headings", style ="Treeview")
+
+    shiftDutiesTable.heading("Shift", text = "Shift")
+    shiftDutiesTable.heading("Shift Description", text = "Shift Description")
         
-    host_button = customtkinter.CTkButton(shiftDuties_frame, text = "Host", command = hostButton_clicked)
-    host_button.grid(row = 1, column = 1, padx = 10, pady = 10)
+    shiftDutiesTable.column("Shift", anchor="center", width=60)
+    shiftDutiesTable.column("Shift Description", anchor="center", width=60)
+        
+    for item in shiftDuties:
+        shiftDutiesTable.insert("", "end", values=item)
     
-    waiter_button = customtkinter.CTkButton(shiftDuties_frame, text = "Waiter")
-    waiter_button.grid(row = 2, column = 1, padx = 10, pady = 10)
-    
-    busser_button = customtkinter.CTkButton(shiftDuties_frame, text = "Busser")
-    busser_button.grid(row = 3, column = 1, padx = 10, pady = 10)
-    
-    dishWasher_button = customtkinter.CTkButton(shiftDuties_frame, text = "Dish Washer")
-    dishWasher_button.grid(row = 1, column = 2, padx = 10, pady = 10)
-    
-    cook_button = customtkinter.CTkButton(shiftDuties_frame, text = "Cook")
-    cook_button.grid(row = 2, column = 2, padx = 10, pady = 10)
-    
+    scrollbar = ttk.Scrollbar(shiftDutiesTable, orient="vertical", command = shiftDutiesTable.yview)
+    shiftDutiesTable.configure(yscroll = scrollbar.set)
+        
+    shiftDutiesTable.grid(row = 1, column = 0, padx = 20, pady = 20, sticky = "nsew")
+    scrollbar.grid(row = 1, column = 1, sticky = "ns")
+        
     # Ensure the row and column in content_frame can expand to fill the space
-    content_frame.grid_rowconfigure(0, weight=1)
-    content_frame.grid_columnconfigure(0, weight=1)
-    shiftDuties_frame.grid_rowconfigure((1,2,3), weight = 1)
-    shiftDuties_frame.grid_columnconfigure((1,2), weight = 1)
+    content_frame.grid_rowconfigure(1, weight=1)
+    content_frame.columnconfigure(0, weight=1)
     
-def hostButton_clicked():
-    print("Host Button Clicked")
 
 def viewEmployeePerformance_clicked():
     print("Clicked View Employee Performance")
@@ -259,9 +392,17 @@ def viewEmployeePerformance_clicked():
     content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
     content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-    utilitiesLabel = customtkinter.CTkLabel(content_frame, text="Employee Performance Ratings", font = Hanuman, text_color="black")
-    utilitiesLabel.grid(row=0, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+    performanceLabel = customtkinter.CTkLabel(content_frame, text="Employee Performance Ratings", font = Hanuman, text_color="black")
+    performanceLabel.grid(row=0, column=1, padx=40, pady=20, sticky="nsew")  # Center the label within the frame
 
+    backButton = customtkinter.CTkButton(content_frame, text = "<--", width = 100, height = 50,command = scheduleButton_clicked)
+    backButton.grid(row=0, column=0, padx=10, pady=20, sticky="nw")  # Center the label within the frame
+    
+    style = ttk.Style()
+    style.configure("Treeview", rowheight = 50, font=("Helvetica", 16))
+    
+    style.configure("Treeview.Heading", font =("Helvetica", 18, "bold"))
+    
     employeePerformance = SQLConnection.fetch_all("SELECT employeeIDNumber, employeeName, averagePerformanceNumber FROM employee ORDER BY averagePerformanceNumber DESC;")
         
     employeePerformanceTable = ttk.Treeview(content_frame, columns=("Employee ID", "Employee Name","Average Performance Number"), show = "headings")
@@ -280,7 +421,7 @@ def viewEmployeePerformance_clicked():
     scrollbar = ttk.Scrollbar(employeePerformanceTable, orient="vertical", command = employeePerformanceTable.yview)
     employeePerformanceTable.configure(yscroll = scrollbar.set)
         
-    employeePerformanceTable.grid(row = 1, column = 0, padx = 20, pady = 20, sticky = "nsew")
+    employeePerformanceTable.grid(row = 1, column = 1, padx = 20, pady = 20, sticky = "nsew")
     scrollbar.grid(row = 1, column = 1, sticky = "ns")
         
     # Ensure the row and column in content_frame can expand to fill the space
@@ -289,12 +430,11 @@ def viewEmployeePerformance_clicked():
         
 # Earnings Button
 def earningsButton_clicked():
-        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Earnings", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Earnings", font=(Hanuman, 80), text_color="black")
         LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
     
         # Ensure the row and column in content_frame can expand to fill the space
@@ -303,12 +443,11 @@ def earningsButton_clicked():
 
 # Transaction Button
 def transactionsButton_clicked():
-        customFont = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         Hanuman = customtkinter.CTkFont(family="hanuman",size=40, slant= "italic")
         content_frame = customtkinter.CTkFrame(managementUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
 
-        LookUp_label = customtkinter.CTkLabel(content_frame, text="Transaction", font=(Hanuman, 80), text_color="black",underline= False)
+        LookUp_label = customtkinter.CTkLabel(content_frame, text="Transaction", font=(Hanuman, 80), text_color="black")
         LookUp_label.grid(row=0, column=0, padx=20, pady=20, sticky="nsew")  # Center the label within the frame
     
         # Ensure the row and column in content_frame can expand to fill the space
@@ -324,6 +463,11 @@ def utilitiesButton_clicked():
         utilitiesLabel = customtkinter.CTkLabel(content_frame, text="Inventory Mangement", font=(Hanuman, 40), text_color="black")
         utilitiesLabel.grid(row=0, column=0, padx=20, pady=20, sticky="nw")  # Center the label within the frame
 
+        style = ttk.Style()
+        style.configure("Treeview", rowheight = 50, font=("Helvetica", 16))
+    
+        style.configure("Treeview.Heading", font =("Helvetica", 18, "bold"))
+    
         inventory = SQLConnection.fetch_all("SELECT * FROM inventory")
         print(inventory)
         
@@ -352,8 +496,8 @@ def utilitiesButton_clicked():
         inventoryButtons_frame = customtkinter.CTkFrame(content_frame, fg_color = "#97B9E0")
         inventoryButtons_frame.grid(row = 2, column = 0, padx = 20, pady = 20, columnspan = 2, sticky="ew")
         
-        contactSupplier_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Contact Inventory Supplier", command = contactInventory_clicked)
-        placeOrder_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Place Order Restock", command = placeOrder_clicked)
+        contactSupplier_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Contact Inventory Supplier", width = 80, height = 50, command = contactInventory_clicked)
+        placeOrder_button = customtkinter.CTkButton(inventoryButtons_frame, text = "Place Order Restock", width = 80, height = 50, command = placeOrder_clicked)
         
         contactSupplier_button.grid(row = 0, column = 0, padx = 15, pady= 15)
         placeOrder_button.grid(row = 0, column = 1, padx = 15, pady = 15)
@@ -404,7 +548,7 @@ def timeClockButton_clicked():
             now = datetime.now()
             current_Time = now.strftime('%Y-%m-%d %H:%M:%S')
             
-            
+            currentTime_label.configure(text = f"Current Time: {current_Time}")
             # Logic for handling employee clock-in/out
             if employee_ID:
                 if Clocked_in:
@@ -427,17 +571,13 @@ def timeClockButton_clicked():
         employeeID_label.grid(row = 2, column = 0, padx = 10, pady = 10, sticky = "w")
         
         employeeID_TextBox = customtkinter.CTkEntry(content_frame, width = 350, font = ("Times New Roman", 18))
-        employeeID_TextBox.grid(row = 2, column = 1, padx = 10, pady = 10, sticky = "w")
+        employeeID_TextBox.grid(row = 2, column = 0, padx = 10, pady = 10, sticky = "e")
         
         confirm_Button = customtkinter.CTkButton(content_frame, text="Confirm", width=100, height= 60, command = clock_in_out)
-        confirm_Button.grid(row = 2, column = 1, padx = 10, pady = 10, sticky = "e")
+        confirm_Button.grid(row = 2, column = 1, padx = 10, pady = 10, sticky = "w")
         
         employeeID_Status_Label = customtkinter.CTkLabel(content_frame, text = "", font=("Times New Roman", 18))
-        employeeID_Status_Label.grid(row = 23, column = 1, padx = 10, pady = 10, sticky = "s")
-
-# Button For Manager Switch -> Employee
-switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="NO WORK: Employ View", width=100, height= 60)
-switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, sticky = "nswe")
+        employeeID_Status_Label.grid(row = 3, column = 0, padx = 10, pady = 10, sticky = "w")
 
 #Commands for Buttons clicks
 def homeButton_click(): # this button will switch from manager to employee view for now
@@ -459,7 +599,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
 
     employeeUI.title("Restaurant Management Solutions")
     employeeUI.geometry(f"{screen_width}x{screen_height - 100}+0+0")
-
+    
     # Set dimensions for the "rectangle"
     rect_width = 225
     rect_height = screen_height 
@@ -485,8 +625,16 @@ def homeButton_click(): # this button will switch from manager to employee view 
     left_frame.grid(row=0, column=0, rowspan=8, sticky="nsw")
 
     # Create a main content frame for dynamic content 
-    content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="white") 
+    content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
     content_frame.grid(row=1, column=1, columnspan=8, sticky="nswe")
+    
+    #requestTimeOff_label = customtkinter.CTkLabel(content_frame, text="Request Time Off", font=(Hanuman, 40), text_color="black")
+    #requestTimeOff_label.grid(row=0, column=1, padx=20, pady=20, sticky="nw")  # Center the label within the frame
+
+    # Ensure the row and column in content_frame can expand to fill the space
+    content_frame.grid_rowconfigure(1, weight=1)
+    content_frame.grid_rowconfigure(2, weight=0)
+    content_frame.grid_columnconfigure(0, weight=1)
 
     def clear_content_frame():
         for widget in content_frame.winfo_children():
@@ -817,6 +965,9 @@ def homeButton_click(): # this button will switch from manager to employee view 
         content_frame = customtkinter.CTkFrame(employeeUI,width=1350, fg_color="#97B9E0") 
         content_frame.grid(row=1, column=1, columnspan=8, sticky="nsew")
 
+        backButton = customtkinter.CTkButton(content_frame, text = "<--", width = 100, height = 50,command = tableManagement_clicked)
+        backButton.grid(row=0, column=0, padx=10, pady=20, sticky="nw")  # Center the label within the frame
+        
         capacityTitle_label = customtkinter.CTkLabel(content_frame, text="Restaurant Capacity", font=(Hanuman, 60), text_color="black")
         capacityTitle_label.grid(row=0, column=0, padx=20, pady=30,  sticky="n")
 
@@ -932,7 +1083,7 @@ def homeButton_click(): # this button will switch from manager to employee view 
 # Manager Buttons
     # Command Already Added
 logo = customtkinter.CTkLabel(left_frame, text="", image=RMS_Logo_image, width=100, height=100)
-homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100)
+homeButton = customtkinter.CTkButton(left_frame, text="Home", width=200, height=100, command = homeManager_clicked)
 scheduleButton = customtkinter.CTkButton(left_frame, text="Schedule", width=200, height=100, command = scheduleButton_clicked)
 earningsButton = customtkinter.CTkButton(left_frame, text="Earnings", width=200, height=100, command = earningsButton_clicked)
 transactionButton = customtkinter.CTkButton(left_frame, text="Transaction", width=200, height=100, command = transactionsButton_clicked)
@@ -941,7 +1092,7 @@ TimeClockButton = customtkinter.CTkButton(left_frame, text="TimeClock", width=20
 
 # Button For Manager Switch -> Employee on manager screen
 switchToEmployee_Button = customtkinter.CTkButton(top_frame, text="Switch\nView", width=100, height= 60, command=homeButton_click)
-switchToEmployee_Button.grid(row = 0, column = 3, rowspan = 8, padx=15)
+switchToEmployee_Button.grid(row = 0, column = 2, rowspan = 8, padx=0, sticky = "e")
 
 for i in range(8): 
     left_frame.grid_rowconfigure(i, weight=1) 

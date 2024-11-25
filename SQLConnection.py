@@ -41,52 +41,35 @@ def fetch_all(query):
 # Shows menu
 def show_menu():
         mycursor.execute("SELECT * FROM menu")
-        
-        #  Add code to GUI for display
-        
         print("Menu Shown")
 
 # Shows notifcications     
 def show_notifications():
         mycursor.execute("SELECT * FROM notifications")
-        
-        #  Add code to GUI for display
-        
         print("Notificationa Shown")
 
 # Show orders
 def show_orders():
         mycursor.execute("SELECT * FROM orders")
-        
-        #  Add code to GUI for display
-        
         print("Orders Shown")
 
 # Show shift duties
 def show_shiftDuties():
         mycursor.execute("SELECT * FROM shift_duties")
-        
-        # Add code to GUI for display
-        
         print("Shift Duties Shown")     
-        
+       
+def show_HostDuties():
+        mycursor.execute("SELECT shift, shiftDescription FROM shift_duties WHERE shift = ?") 
 
 # Show scheduele
 def show_scheduele():
-        mycursor.execute("SELECT * FROM scheduele")
-        
-        #  Add code to GUI for display
-        
+        mycursor.execute("SELECT employeeIDNumber, shiftDay, shiftTime FROM scheduele WHERE shift = ?")
         print("Scheduele Shown")
 
 def show_absent_request():
         mycursor.execute("SELECT * FROM absent_request")
-        
-        #  Add code to GUI for display
-        
         print("Absent Request Shown")
 
 def show_inventory():
         inventory = mycursor.fetchall("SELECT * FROM inventory")
-        
         print("Inventory Shown")
