@@ -8,8 +8,8 @@ def contactInventory():
     emailPassword = "vnow rynt hwot rmaw"
     receiverEmail = "inventorysupplierou@gmail.com"
 
-    subjectEmail = "Fufillment Needed"
-    messageEmail = "Dear Inventory Supplier,\nPlease contact us immediately given we .\n\nSincerely,\n\nThe Anything Coney Island\ntheanythingconeyisland@gmail.com"
+    subjectEmail = "Contact Needed - The Anything Coney Island"
+    messageEmail = "Dear Inventory Supplier,\nPlease contact us immediately given there is we have a current issue to discuss.\n\nSincerely,\n\nThe Anything Coney Island\ntheanythingconeyisland@gmail.com"
 
     text = f"Subject: {subjectEmail}\n\n{messageEmail}"
     server = smtplib.SMTP("smtp.gmail.com", 587)
@@ -40,7 +40,7 @@ def placeOrderRestock():
                 emailPassword = "vnow rynt hwot rmaw"
                 receiverEmail = "inventorysupplierou@gmail.com"
 
-                subjectEmail = "Fufillment Needed"
+                subjectEmail = "Fufillment Needed - The Anything Coney Island"
                 messageEmail = "Dear Inventory Supplier,\n\nThe Anything Conney Island needs a restock done on the following:\n\n" f"{'. '.join(outOfStock_Items)}\n\nSincerely,\n\nThe Anything Coney Island\ntheanythingconeyisland@gmail.com"
 
                 text = f"Subject: {subjectEmail}\n\n{messageEmail}"
